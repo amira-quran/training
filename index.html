@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة التدريب العملي لمنسقة الأنشطة والبرامج القرآنية</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tajawal', 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    .ltr-cell {
+      direction: ltr;
+      font-family: 'Inter', monospace;
+    }
+    .excel-cell:focus {
+      outline: 2px solid #16a34a;
+      background-color: #f0fdf4;
+    }
+    .tab-active {
+      background-color: #0f766e;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+
+  <!-- Top Header -->
+  <header class="bg-gradient-to-l from-teal-900 via-teal-800 to-emerald-800 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-amber-400/20 border border-amber-300/40 flex items-center justify-center text-amber-300 font-extrabold text-xl shrink-0">
+          ق
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs bg-amber-400/20 text-amber-200 border border-amber-300/30 px-2.5 py-0.5 rounded-full font-medium">مملكة البحرين • مراكز تحفيظ القرآن الكريم</span>
+            <span class="text-xs bg-emerald-400/20 text-emerald-100 px-2.5 py-0.5 rounded-full">تدريب عملي تفاعلي 2026</span>
+          </div>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight mt-0.5">المحاكي التدريبي الشامل لوظيفة منسقة الأنشطة والبرامج القرآنية</h1>
+        </div>
+      </div>
+
+      <!-- Overall Readiness Score Pill -->
+      <div class="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-3.5 py-2 rounded-xl border border-white/15">
+        <div class="text-right">
+          <div class="text-xs text-teal-100">مؤشر الجاهزية للاختبار</div>
+          <div class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span id="overallScoreText">0%</span>
+            <span class="text-xs text-amber-300 font-normal" id="completedBadgesText">(0/5 محطات مكتملة)</span>
+          </div>
+        </div>
+        <div class="w-24 bg-teal-950/60 h-2.5 rounded-full overflow-hidden">
+          <div id="overallProgressBar" class="bg-amber-400 h-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <button id="resetAllBtn" type="button" class="text-xs bg-white/10 hover:bg-white/20 text-white px-2.5 py-1 rounded-lg transition" title="إعادة ضبط التقدم">
+          إعادة ضبط
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-teal-950/50 border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-1.5 overflow-x-auto custom-scroll">
+        <button type="button" data-tab="dashboard" class="nav-tab tab-active px-3.5 py-2 rounded-lg text-xs md:text-sm font-bold whitespace-nowrap transition flex items-center gap-1.5">
+          <span>1. خارطة المهارات والضوابط</span>
+          <span id="badge-dashboard" class="w-2 h-2 rounded-full bg-amber-300 hidden"></span>
+        </button>
+        <button type="button" data-tab="excel" class="nav-tab px-3.5 py-2 rounded-lg text-xs md:text-sm font-bold text-teal-100 hover:bg-white/10 whitespace-nowrap transition flex items-center gap-1.5">
+          <span>2. محاكي الإكسل والميزانية والرسوم</span>
+          <span id="badge-excel" class="w-2 h-2 rounded-full bg-emerald-400 hidden"></span>
+        </button>
+        <button type="button" data-tab="planning" class="nav-tab px-3.5 py-2 rounded-lg text-xs md:text-sm font-bold text-teal-100 hover:bg-white/10 whitespace-nowrap transition flex items-center gap-1.5">
+          <span>3. التخطيط التربوي ونظام «اقرأ»</span>
+          <span id="badge-planning" class="w-2 h-2 rounded-full bg-emerald-400 hidden"></span>
+        </button>
+        <button type="button" data-tab="gdrive" class="nav-tab px-3.5 py-2 rounded-lg text-xs md:text-sm font-bold text-teal-100 hover:bg-white/10 whitespace-nowrap transition flex items-center gap-1.5">
+          <span>4. مختبر Google Drive والاستبانات</span>
+          <span id="badge-gdrive" class="w-2 h-2 rounded-full bg-emerald-400 hidden"></span>
+        </button>
+        <button type="button" data-tab="exam" class="nav-tab px-3.5 py-2 rounded-lg text-xs md:text-sm font-bold text-teal-100 hover:bg-white/10 whitespace-nowrap transition flex items-center gap-1.5">
+          <span>5. الاختبار العملي والمواقف الإدارية</span>
+          <span id="badge-exam" class="w-2 h-2 rounded-full bg-emerald-400 hidden"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed bottom-5 left-5 z-50 hidden max-w-sm bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3">
+    <span id="toastIcon" class="text-lg">✅</span>
+    <p id="toastMessage" class="text-sm font-medium"></p>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
+
+    <!-- ==================== TAB 1: DASHBOARD & SKILLS BLUEPRINT ==================== -->
+    <section id="tab-dashboard" class="tab-panel space-y-6">
+      <!-- Hero Banner -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 text-xs font-bold text-teal-800 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">
+            دليل التفوق في الاختبار العملي والمقابلة الشخصية
+          </span>
+          <h2 class="text-xl md:text-2xl font-extrabold text-slate-900">
+            أهم المهارات المطلوبة للنجاح بتفوق في اختبار منسقة الأنشطة القرآنية
+          </h2>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            بناءً على ملف الورشة التدريبية الصادر عن <strong>قسم البرامج والأنشطة القرآنية بوزارة العدل والشؤون الإسلامية والأوقاف</strong>، يركز الاختبار العملي على <strong>5 محاور تطبيقية وإدارية</strong>. تصفحي الملخص التفاعلي أدناه ثم انتقلي إلى كل محطة للتدريب العملي المباشر.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 shrink-0">
+          <button type="button" data-goto="excel" class="goto-btn bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm px-4 py-2.5 rounded-xl shadow-sm transition">
+            ابدئي التدريب العملي على الإكسل ←
+          </button>
+          <button type="button" data-goto="exam" class="goto-btn bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm px-4 py-2.5 rounded-xl shadow-sm transition">
+            خوض الاختبار التجريبي الشامل
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Pillars of the Practical Exam -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center mb-3">1</div>
+            <h3 class="font-bold text-base text-slate-900 mb-1">مهارات برنامج Excel (أساسي جداً)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              تصميم جدول <strong>ميزانية إقامة نشاط</strong> (حساب المجموع بدالة SUM والفائض بطرح المصروفات من المجموع)، وإنشاء <strong>رسم بياني عمودي</strong> لمقارنة تقييمات الذكور والإناث.
+            </p>
+          </div>
+          <button type="button" data-goto="excel" class="goto-btn text-xs font-bold text-emerald-700 hover:text-emerald-900 text-right">
+            التدريب في محاكي الإكسل ←
+          </button>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-800 font-bold flex items-center justify-center mb-3">2</div>
+            <h3 class="font-bold text-base text-slate-900 mb-1">تطبيقات Google Drive الأربعة</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              إنشاء <strong>Google Forms</strong> لاستبانات الطلاب وأولياء الأمور، و<strong>Google Docs</strong> للتقارير والخطط، و<strong>Google Sheets</strong> للتحليل، وتنظيم <strong>ملف الأنشطة</strong> السحابي.
+            </p>
+          </div>
+          <button type="button" data-goto="gdrive" class="goto-btn text-xs font-bold text-sky-700 hover:text-sky-900 text-right">
+            التدريب في مختبر Google Drive ←
+          </button>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 font-bold flex items-center justify-center mb-3">3</div>
+            <h3 class="font-bold text-base text-slate-900 mb-1">برنامج التربية القرآنية ونظام «اقرأ»</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              ربط كل نشاط بـ <strong>المجالات التربوية والكفايات</strong>، إعداد الخطة السنوية/الفصلية، <strong>بطاقة التحقق والمتابعة</strong>، والتسجيل في موقع «اقرأ» (1 سبتمبر – 30 أغسطس).
+            </p>
+          </div>
+          <button type="button" data-goto="planning" class="goto-btn text-xs font-bold text-amber-700 hover:text-amber-900 text-right">
+            التدريب على التخطيط ونظام اقرأ ←
+          </button>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 font-bold flex items-center justify-center mb-3">4</div>
+            <h3 class="font-bold text-base text-slate-900 mb-1">الضوابط الشرعية والأمن والمخاطر</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              إدارة المخاطر الـ 6، تطبيق معادلة الإشراف (<strong>مشرف لكل 15 طالباً</strong> + مشرف إداري للرحلة)، ومواعيد وجهات التصاريح الرسمية قبل إقامة أي فعالية.
+            </p>
+          </div>
+          <button type="button" data-goto="exam" class="goto-btn text-xs font-bold text-rose-700 hover:text-rose-900 text-right">
+            اختبار المواقف الإدارية ←
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Golden Rules & Approval Matrix + Supervisor Calculator -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Approvals & Rules Table -->
+        <div class="lg:col-span-2 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 class="font-extrabold text-base text-slate-900">مصفوفة التصاريح والضوابط الحاسمة في الاختبار</h3>
+              <p class="text-xs text-slate-500">اضغطي على أي بند لتأكيد مراجعته وحفظه قبل دخول اللجنة</p>
+            </div>
+            <span id="checkedRulesCount" class="text-xs font-bold bg-teal-50 text-teal-800 px-3 py-1 rounded-full border border-teal-200">
+              تمت مراجعة 0 من 8 ضوابط
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs md:text-sm border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                  <th class="p-2.5 font-bold">تم</th>
+                  <th class="p-2.5 font-bold">الحالة أو الإجراء</th>
+                  <th class="p-2.5 font-bold">الشرط النظامي في الملف</th>
+                  <th class="p-2.5 font-bold">الجهة المختصة / المدة</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="1"></td>
+                  <td class="p-2.5 font-bold text-slate-800">استضافة محاضر (من داخل أو خارج البحرين)</td>
+                  <td class="p-2.5 text-slate-600">مؤهل علمي معترف به في البحرين أو مناسب لنوع النشاط</td>
+                  <td class="p-2.5"><span class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-semibold">إدارة شؤون القرآن الكريم (قبل أسبوعين)</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="2"></td>
+                  <td class="p-2.5 font-bold text-slate-800">استخدام مرافق وأدوات المسجد</td>
+                  <td class="p-2.5 text-slate-600">أخذ موافقة مسبقة قبل إقامة النشاط</td>
+                  <td class="p-2.5"><span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded font-semibold">إدارة الأوقاف</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="3"></td>
+                  <td class="p-2.5 font-bold text-slate-800">جمع تبرعات (طبق خيري / توزيع حصالات)</td>
+                  <td class="p-2.5 text-slate-600">يُمنع التنفيذ إلا بعد استخراج تصريح رسمي حسب الإجراءات</td>
+                  <td class="p-2.5"><span class="bg-rose-100 text-rose-900 px-2 py-0.5 rounded font-semibold">وزارة العدل والشؤون الإسلامية والأوقاف</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="4"></td>
+                  <td class="p-2.5 font-bold text-slate-800">تنظيم رحلة طلابية أو نشاط خارجي</td>
+                  <td class="p-2.5 text-slate-600">تعيين مشرف إداري عام + شخص مسؤول عن كل 15 طالباً</td>
+                  <td class="p-2.5"><span class="bg-sky-100 text-sky-900 px-2 py-0.5 rounded font-semibold">إدارة المركز + موافقة خطية من ولي الأمر</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="5"></td>
+                  <td class="p-2.5 font-bold text-slate-800">مشاركة أي طالب في برنامج بالمركز</td>
+                  <td class="p-2.5 text-slate-600">أخذ موافقة كتابية من ولي الأمر والاحتفاظ بها في المركز</td>
+                  <td class="p-2.5"><span class="bg-purple-100 text-purple-900 px-2 py-0.5 rounded font-semibold">تحفظ في ملف البرامج بالمركز</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="6"></td>
+                  <td class="p-2.5 font-bold text-slate-800">الضوابط الشرعية والسلامة المكانية</td>
+                  <td class="p-2.5 text-slate-600">عدم خلط الجنسين، خلو الألعاب من المحظورات، تجنب الأماكن المرتفعة والبرك العميقة</td>
+                  <td class="p-2.5"><span class="bg-slate-200 text-slate-800 px-2 py-0.5 rounded font-semibold">مسؤولية المنسق المباشرة</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="7"></td>
+                  <td class="p-2.5 font-bold text-slate-800">فترة تسجيل وتقييم الأنشطة في «اقرأ»</td>
+                  <td class="p-2.5 text-slate-600">التسجيل من 1 سبتمبر حتى 30 أغسطس، والتقييم يومي من الأخصائي</td>
+                  <td class="p-2.5"><span class="bg-teal-100 text-teal-900 px-2 py-0.5 rounded font-semibold">موقع اقرأ الإلكتروني + مراجعة الأخصائي</span></td>
+                </tr>
+                <tr class="hover:bg-slate-50">
+                  <td class="p-2.5"><input type="checkbox" class="rule-check w-4 h-4 accent-teal-700 rounded cursor-pointer" data-rule="8"></td>
+                  <td class="p-2.5 font-bold text-slate-800">محتويات ملف البرامج والأنشطة القرآنية</td>
+                  <td class="p-2.5 text-slate-600">الخطة السنوية + بطاقة التحقق والمتابعة + التقرير الختامي + موافقات أولياء الأمور</td>
+                  <td class="p-2.5"><span class="bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded font-semibold">أرشفة ورقية وإلكترونية (Google Drive)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Interactive Safety & Supervisor Calculator -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-full border border-teal-200">أداة مساعدة للاختبار</span>
+            <h3 class="font-extrabold text-base text-slate-900">حاسبة المشرفين وإدارة المخاطر (قاعدة 15 طالباً)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              من الأسئلة المتكررة في الاختبار: إذا أراد المركز تنظيم رحلة أو نشاط لعدد معين من الطلبة، كم مشرفاً يجب توفيره وفق اشتراطات الصفحة 3 والصفحة 6؟
+            </p>
+
+            <div class="pt-2">
+              <label for="studentCountInput" class="block text-xs font-bold text-slate-700 mb-1">أدخلي عدد الطلاب المشاركين في النشاط أو الرحلة:</label>
+              <input id="studentCountInput" type="number" min="1" max="600" value="45" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm font-bold text-slate-900 focus:outline-none focus:border-teal-600" />
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-600">مشرفو المجموعات (مشرف لكل 15 طالباً):</span>
+                <span id="groupSupervisorsOutput" class="font-extrabold text-sm text-teal-800">3 مشرفين</span>
+              </div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-600">المشرف الإداري العام للرحلة:</span>
+                <span class="font-extrabold text-sm text-amber-700">1 مشرف إداري</span>
+              </div>
+              <div class="border-t border-slate-200 pt-2 flex items-center justify-between text-xs font-bold">
+                <span class="text-slate-800">إجمالي طاقم الإشراف المطلوب للرحلة:</span>
+                <span id="totalSupervisorsOutput" class="text-base text-emerald-700">4 مسؤولين</span>
+              </div>
+            </div>
+
+            <div class="bg-amber-50/80 border border-amber-200 rounded-xl p-3 space-y-1.5">
+              <div class="text-xs font-bold text-amber-900">الخطوات الـ 5 لإدارة المخاطر (صفحة 6):</div>
+              <ul class="text-xs text-amber-900 space-y-1 list-disc pr-4">
+                <li>توفير وسائل وإرشادات الأمن والسلامة في المكان.</li>
+                <li>رفع وعي الأمن والسلامة لدى الطلاب.</li>
+                <li>تنظيم دورة حريق للتعامل مع الطوارئ.</li>
+                <li>تنظيم دورة الإسعافات الأولية.</li>
+                <li>توفير مشرف لكل 15 طالباً للتحكم في سلامتهم.</li>
+              </ul>
+            </div>
+          </div>
+
+          <button id="markDashboardDoneBtn" type="button" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs py-2.5 rounded-xl transition">
+            تأكيد إتقان الضوابط والانتقال لمحاكي الإكسل ✓
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: EXCEL & CHART SIMULATOR ==================== -->
+    <section id="tab-excel" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">مطابق لصفحة 13 من ملف الورشة</span>
+          <h2 class="text-xl font-extrabold text-slate-900 mt-1">المحاكي العملي لبرنامج الإكسل (Excel) لإعداد الأنشطة القرآنية</h2>
+          <p class="text-xs md:text-sm text-slate-600">
+            في الاختبار العملي يُطلب منكِ مهارات محددة في برنامج Excel: <strong>1) إعداد جدول ميزانية إقامة نشاط بالمعادلات</strong>، و<strong>2) تحويل نتائج تقييم الدورة إلى رسم بياني عمودي مقارن</strong>.
+          </p>
+        </div>
+        <div class="flex gap-2 shrink-0">
+          <button type="button" id="loadPdfScenarioBtn" class="text-xs font-bold bg-emerald-700 text-white px-3.5 py-2 rounded-xl hover:bg-emerald-800 transition">
+            بيانات مثال الملف (صفحة 13)
+          </button>
+          <button type="button" id="loadNewScenarioBtn" class="text-xs font-bold bg-slate-200 text-slate-800 px-3.5 py-2 rounded-xl hover:bg-slate-300 transition">
+            تدريب إضافي بأرقام جديدة
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Part 1: Budget Table & Formula Simulator -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 class="font-extrabold text-base text-slate-900">التمرين العملي الأول: جدول «ميزانية إقامة نشاط»</h3>
+              <p class="text-xs text-slate-500">اكتبي المعادلة أو القيمة الصحيحة في خلية <strong>المجموع (D2)</strong> وخلية <strong>الفائض (F2)</strong> ثم اضغطي على «تحقق من الحل».</p>
+            </div>
+            <button type="button" id="showExcelHintBtn" class="text-xs font-bold text-teal-700 hover:underline">
+              إظهار شرح المعادلات خطوة بخطوة
+            </button>
+          </div>
+
+          <!-- Formula Bar Mockup -->
+          <div class="bg-slate-100 p-2.5 rounded-xl border border-slate-300 flex items-center gap-2">
+            <span id="activeCellLabel" class="bg-white border border-slate-300 px-2.5 py-1 rounded text-xs font-bold text-slate-700 ltr-cell">D2</span>
+            <span class="text-xs font-extrabold italic text-slate-500 px-1 ltr-cell">fx</span>
+            <input id="formulaBarInput" type="text" placeholder="=SUM(A2:C2) أو اكتبي المعادلة هنا..." class="flex-1 bg-white border border-slate-300 rounded px-3 py-1 text-xs ltr-cell text-slate-800 focus:outline-none focus:border-emerald-600" />
+          </div>
+
+          <!-- Excel Grid Table -->
+          <div class="overflow-x-auto border border-slate-300 rounded-xl">
+            <table class="w-full text-center text-xs md:text-sm border-collapse">
+              <thead>
+                <tr class="bg-slate-200 text-slate-600 text-xs font-mono">
+                  <th class="border border-slate-300 py-1 px-2 w-10">#</th>
+                  <th class="border border-slate-300 py-1 px-2">A</th>
+                  <th class="border border-slate-300 py-1 px-2">B</th>
+                  <th class="border border-slate-300 py-1 px-2">C</th>
+                  <th class="border border-slate-300 py-1 px-2 bg-emerald-100 text-emerald-900 font-bold">D (معادلة الجمع)</th>
+                  <th class="border border-slate-300 py-1 px-2">E</th>
+                  <th class="border border-slate-300 py-1 px-2 bg-amber-100 text-amber-900 font-bold">F (معادلة الطرح)</th>
+                </tr>
+                <tr class="bg-sky-100/80 text-slate-900 font-bold">
+                  <td class="border border-slate-300 py-2 px-2 font-mono text-xs bg-slate-200">1</td>
+                  <td class="border border-slate-300 py-2 px-2">الفطور</td>
+                  <td class="border border-slate-300 py-2 px-2">الجوائز</td>
+                  <td class="border border-slate-300 py-2 px-2">طباعة المذكرات</td>
+                  <td class="border border-slate-300 py-2 px-2 bg-sky-200/70">المجموع</td>
+                  <td class="border border-slate-300 py-2 px-2">المصروفات</td>
+                  <td class="border border-slate-300 py-2 px-2 bg-sky-200/70">الفائض</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border border-slate-300 py-2 px-2 font-mono text-xs bg-slate-200 font-bold">2</td>
+                  <td class="border border-slate-300 p-1">
+                    <input id="cellA2" data-cell="A2" type="number" value="50" class="excel-cell w-full text-center py-1.5 font-bold rounded ltr-cell" />
+                  </td>
+                  <td class="border border-slate-300 p-1">
+                    <input id="cellB2" data-cell="B2" type="number" value="20" class="excel-cell w-full text-center py-1.5 font-bold rounded ltr-cell" />
+                  </td>
+                  <td class="border border-slate-300 p-1">
+                    <input id="cellC2" data-cell="C2" type="number" value="10" class="excel-cell w-full text-center py-1.5 font-bold rounded ltr-cell" />
+                  </td>
+                  <td class="border border-slate-300 p-1 bg-emerald-50/60">
+                    <input id="cellD2" data-cell="D2" type="text" placeholder="=SUM(A2:C2)" class="excel-cell w-full text-center py-1.5 font-extrabold text-emerald-900 bg-white border border-emerald-300 rounded ltr-cell" />
+                  </td>
+                  <td class="border border-slate-300 p-1">
+                    <input id="cellE2" data-cell="E2" type="number" value="70" class="excel-cell w-full text-center py-1.5 font-bold rounded ltr-cell" />
+                  </td>
+                  <td class="border border-slate-300 p-1 bg-amber-50/60">
+                    <input id="cellF2" data-cell="F2" type="text" placeholder="=D2-E2" class="excel-cell w-full text-center py-1.5 font-extrabold text-amber-900 bg-white border border-amber-300 rounded ltr-cell" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap gap-2">
+              <button type="button" id="checkExcelBtn" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm transition">
+                تحقق من صحة الجدول والمعادلات ✓
+              </button>
+              <button type="button" id="autoSolveExcelBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl border border-slate-300 transition">
+                تطبيق المعادلة النموذجية تلقائياً
+              </button>
+            </div>
+            <span id="excelResultBadge" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600">
+              بانتظار إدخال المعادلات...
+            </span>
+          </div>
+
+          <!-- Step-by-Step Hint Box -->
+          <div id="excelHintBox" class="bg-teal-50/90 border border-teal-200 rounded-xl p-4 space-y-2 text-xs text-teal-950">
+            <div class="font-extrabold text-sm text-teal-900">كيف تنفذين هذا الجدول في الاختبار العملي خلال دقيقتين؟</div>
+            <ol class="list-decimal pr-4 space-y-1.5 leading-relaxed">
+              <li><strong>دمج وتوسيط العنوان:</strong> حددي الخلايا من A1 إلى F1 في الصف العلوي واكتبي <code>ميزانية إقامة نشاط</code> ثم اضغطي على أداة <strong>Merge &amp; Center (دمج وتوسيط)</strong>.</li>
+              <li><strong>حساب المجموع (الخلية D2):</strong> اكتبي المعادلة <code class="ltr-cell bg-white px-1.5 py-0.5 rounded border">=SUM(A2:C2)</code> أو <code class="ltr-cell bg-white px-1.5 py-0.5 rounded border">=A2+B2+C2</code> ليجمع الفطور (50) + الجوائز (20) + طباعة المذكرات (10) = <strong>80</strong>.</li>
+              <li><strong>حساب الفائض (الخلية F2):</strong> الفائض هو الفرق بين المجموع والمصروفات الفعلية؛ اكتبي <code class="ltr-cell bg-white px-1.5 py-0.5 rounded border">=D2-E2</code> أي (80 - 70 = <strong>10</strong>).</li>
+              <li><strong>تنسيق الحدود والتظليل:</strong> حددي الجدول بالكامل ثم اختاري <strong>All Borders (كافة الحدود)</strong>، ولوني صف العناوين باللون الأزرق الفاتح كما في صفحة 13.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Part 2: Interactive Evaluation Chart Builder (Page 13) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="font-extrabold text-base text-slate-900">التمرين العملي الثاني: الرسم البياني لتقييم الدورة</h3>
+              <span class="text-xs bg-sky-50 text-sky-800 border border-sky-200 px-2.5 py-0.5 rounded-full font-semibold">صفحة 13</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              يوضح الرسم البياني في الملف مقارنة تقييم المتدربين (<strong>أنثى</strong> باللون الأخضر و<strong>ذكر</strong> باللون الأزرق) في 5 معايير. جربي تعديل القيم أو نوع الرسم البياني لمحاكاة الإكسل:
+            </p>
+          </div>
+
+          <!-- Chart Controls -->
+          <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+            <div>
+              <label for="chartCriterionSelect" class="block font-bold text-slate-700 mb-1">المعيار المراد تعديله:</label>
+              <select id="chartCriterionSelect" class="w-full rounded-lg border border-slate-300 px-2 py-1.5 bg-white text-slate-800 font-medium">
+                <option value="0">1. إلمام المدرب بموضوع الدورة</option>
+                <option value="1">2. قدرة المدرب على توصيل المعلومة</option>
+                <option value="2">3. طريقة تقديم الدورة</option>
+                <option value="3">4. مدة الدورة</option>
+                <option value="4">5. مستوى التنظيم</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <div>
+                <label for="femaleScoreInput" class="block font-bold text-emerald-700 mb-1">تقييم أنثى:</label>
+                <input id="femaleScoreInput" type="number" step="0.1" min="1" max="5" value="4.9" class="w-full rounded-lg border border-slate-300 px-2 py-1.5 font-bold ltr-cell text-center" />
+              </div>
+              <div>
+                <label for="maleScoreInput" class="block font-bold text-sky-700 mb-1">تقييم ذكر:</label>
+                <input id="maleScoreInput" type="number" step="0.1" min="1" max="5" value="4.6" class="w-full rounded-lg border border-slate-300 px-2 py-1.5 font-bold ltr-cell text-center" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Fixed Height Chart Container -->
+          <div class="relative h-64 w-full bg-white p-2 rounded-xl border border-slate-100">
+            <canvas id="evaluationChart"></canvas>
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs text-slate-700 space-y-1">
+            <div class="font-bold text-slate-900">خطوات إدراج هذا المخطط في الاختبار العملي:</div>
+            <p>1. ظللّي جدول المعايير وعمودي (أنثى / ذكر) ← 2. من قائمة <strong>Insert (إدراج)</strong> اختاري <strong>Insert Column or Bar Chart (مخطط عمودي متفاوت المسافات)</strong> ← 3. اضغطي علامة <strong>(+)</strong> بجانب المخطط وفعّلي <strong>Data Labels (تسميات البيانات)</strong> لتظهر الأرقام فوق الأعمدة كما في شريحة 13.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: PEDAGOGICAL PLANNING & IQRAA SYSTEM ==================== -->
+    <section id="tab-planning" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">مطابق لصفحات 7 و8 و11 و14</span>
+          <h2 class="text-xl font-extrabold text-slate-900 mt-1">ورشة بناء الخطة التربوية وبطاقة المتابعة وموقع «اقرأ»</h2>
+          <p class="text-xs md:text-sm text-slate-600">
+            يتطلب الاختبار العملي القدرة على تصميم نشاط مرتبط بـ <strong>برنامج التربية القرآنية (المجالات والكفايات)</strong>، وإعداد <strong>بطاقة التحقق والمتابعة</strong>، وتسجيل النشاط في <strong>موقع اقرأ الإلكتروني</strong> مع صياغة <strong>التقرير الإعلامي المبسط</strong>.
+          </p>
+        </div>
+        <button type="button" id="fillSamplePlanBtn" class="text-xs font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2.5 rounded-xl shrink-0 transition">
+          تعبئة نموذج خطة مثالية للتدريب
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Interactive Plan & Iqraa Form -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+          <h3 class="font-extrabold text-base text-slate-900 border-b border-slate-100 pb-2">
+            نموذج محاكاة التسجيل في خطة المركز وموقع «اقرأ» الإلكتروني
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label for="planActivityName" class="block font-bold text-slate-700 mb-1">اسم النشاط أو البرنامج القرآني:</label>
+              <input id="planActivityName" type="text" placeholder="مثال: ورشة تدبر آيات البر والإحسان" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600" />
+            </div>
+
+            <div>
+              <label for="planActivityType" class="block font-bold text-slate-700 mb-1">نوع النشاط (حسب نموذج القسم):</label>
+              <select id="planActivityType" class="w-full rounded-xl border border-slate-300 px-3 py-2 bg-white text-slate-900">
+                <option value="">-- اختاري نوع النشاط --</option>
+                <option value="تربوي قيمي">نشاط تربوي قيمي (داخل المركز)</option>
+                <option value="محاضرة علمية">محاضرة أو ندوة علمية (استضافة محاضر)</option>
+                <option value="رحلة طلابية">رحلة طلابية ترفيهية وتربوية</option>
+                <option value="مسابقة قرآنية">مسابقة قرآنية وتجويدية</option>
+                <option value="مبادرة خيرية">نشاط خيري (يتطلب تصريح الوزارة)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="planDomain" class="block font-bold text-slate-700 mb-1">المجال التربوي (برنامج التربية القرآنية - ص14):</label>
+              <select id="planDomain" class="w-full rounded-xl border border-slate-300 px-3 py-2 bg-white text-slate-900">
+                <option value="">-- اختاري المجال التربوي --</option>
+                <option value="المجال الإيماني والعقدي">المجال الإيماني والعقدي (تعظيم كلام الله)</option>
+                <option value="المجال الأخلاقي والسلوكي">المجال الأخلاقي والسلوكي (التخلق بآداب القرآن)</option>
+                <option value="المجال المهاري والعلمي">المجال المهاري والعلمي (التدبر وإتقان التلاوة)</option>
+                <option value="المجال الاجتماعي والوطني">المجال الاجتماعي والوطني (خدمة المجتمع والانتماء)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="planCompetency" class="block font-bold text-slate-700 mb-1">الكفاية المستهدفة والموضوع (ص7):</label>
+              <input id="planCompetency" type="text" placeholder="مثال: كفاية التطبيق العملي لآداب الاستماع والبر" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600" />
+            </div>
+
+            <div class="md:col-span-2">
+              <label for="planGoal" class="block font-bold text-slate-700 mb-1">الهدف التربوي من النشاط (تحديد الهدف قبل التنفيذ - ص14):</label>
+              <input id="planGoal" type="text" placeholder="مثال: تعزيز قيمة بر الوالدين لدى 30 طالبة وربطها بالآيات القرآنية الكريمة" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:outline-none focus:border-teal-600" />
+            </div>
+          </div>
+
+          <!-- Follow-up & Verification Checklist Card (بطاقة التحقق والمتابعة) -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2.5">
+            <div class="font-extrabold text-xs text-slate-900">بطاقة التحقق والمتابعة وتوزيع المهام (حددي الإجراءات المستوفاة):</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="chkParentConsent" class="w-4 h-4 accent-teal-700 rounded">
+                <span>أخذ موافقة كتابية من أولياء الأمور وحفظها بالمركز</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="chkSafetyCheck" class="w-4 h-4 accent-teal-700 rounded">
+                <span>التحقق من اشتراطات الأمن والسلامة وعدم خلط الجنسين</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="chkTaskDist" class="w-4 h-4 accent-teal-700 rounded">
+                <span>توزيع المهام وتخصيص مشرف لكل 15 طالباً</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="chkIqraaReg" class="w-4 h-4 accent-teal-700 rounded">
+                <span>تسجيل النشاط في موقع «اقرأ» ومتابعة تقييم الأخصائي اليومي</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Media Report Box (Page 8 item 4) -->
+          <div class="space-y-1.5 text-xs">
+            <label for="planMediaReport" class="block font-bold text-slate-700">
+              صياغة التقرير الإعلامي المبسط لقسم البرامج والأنشطة القرآنية (مع إرفاق صور مختارة للنشر في حسابات الوزارة - ص8):
+            </label>
+            <textarea id="planMediaReport" rows="3" placeholder="اكتبي تقريراً مبسطاً يتضمن: اسم المركز، عنوان النشاط، التاريخ، عدد المشاركين، الهدف التربوي، وأبرز المخرجات مع الإشارة لإرفاق صور مختارة..." class="w-full rounded-xl border border-slate-300 p-3 text-slate-900 focus:outline-none focus:border-teal-600"></textarea>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 pt-1">
+            <button type="button" id="evaluatePlanBtn" class="bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-sm transition">
+              اعتماد الخطة وتقييم جودتها حسب معايير الوزارة ✓
+            </button>
+            <span id="planScoreBadge" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600">
+              لم يتم التقييم بعد
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Preview & Specialist Feedback -->
+        <div class="lg:col-span-5 space-y-4">
+          <div id="planFeedbackCard" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-extrabold text-base text-slate-900">تقييم أخصائي الأنشطة (محاكاة موقع اقرأ)</h3>
+              <span class="text-xs bg-teal-50 text-teal-800 px-2.5 py-0.5 rounded-full font-bold">متابعة يومية</span>
+            </div>
+            <p id="planFeedbackText" class="text-xs text-slate-600 leading-relaxed">
+              قومي بتعبئة عناصر الخطة على اليمين أو اضغطي على «تعبئة نموذج خطة مثالية» لمعاينة كيف يقيم أخصائي الأنشطة عمل المنسقة في الاختبار العملي.
+            </p>
+            <div id="planChecklistResult" class="space-y-1.5 text-xs"></div>
+          </div>
+
+          <!-- Roles Comparison Table (Coordinator vs Student vs Parent - Pages 7, 9, 10) -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+            <h3 class="font-extrabold text-sm text-slate-900">مقارنة المسؤوليات في المركز (مهم لأسئلة المقابلة والاختبار - ص7 إلى ص10)</h3>
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-xl bg-teal-50/70 border border-teal-200">
+                <div class="font-bold text-teal-950 mb-1">1. مسؤوليات منسق الأنشطة بالمركز:</div>
+                <p class="text-teal-900 leading-relaxed">إعداد الخطة السنوية/الفصلية، إعداد بطاقة المتابعة وتوزيع المهام، التسجيل في موقع «اقرأ»، تزويد القسم بتقرير إعلامي مبسط مع صور، طلب تصاريح المحاضرين والتبرعات والأوقاف، والالتزام بساعات العمل.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200">
+                <div class="font-bold text-amber-950 mb-1">2. مسؤوليات الطالب بالمركز (ص9):</div>
+                <p class="text-amber-900 leading-relaxed">ترتيب أولويات حياته وجعل حفظ وتعلم القرآن الكريم على رأسها، تقييم الأنشطة التربوية عبر تعبئة الاستبانات، والمشاركة الفاعلة في تطوير البرنامج بتقديم المقترحات للمركز.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-sky-50/70 border border-sky-200">
+                <div class="font-bold text-sky-950 mb-1">3. مسؤوليات ولي أمر الطالب (ص10):</div>
+                <p class="text-sky-900 leading-relaxed">تشجيع ابنه للحضور ومتابعة ذلك، التعاون في تنفيذ الأنشطة وتلبية دعوات المركز، تقييم الأنشطة عبر تعبئة <strong>استبانة ولي أمر الطالب عن مشاركة ابنه (برنامج اقرأ حالياً)</strong>، وتقديم المقترحات.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: GOOGLE DRIVE & FORMS LAB ==================== -->
+    <section id="tab-gdrive" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-sky-800 bg-sky-50 border border-sky-200 px-3 py-1 rounded-full">مطابق لصفحة 4 وصفحة 15 من الملف</span>
+          <h2 class="text-xl font-extrabold text-slate-900 mt-1">مختبر تطبيقات Google Drive لتطوير البرامج والأنشطة القرآنية</h2>
+          <p class="text-xs md:text-sm text-slate-600">
+            ركّزت الصفحة 15 من الملف على 4 تطبيقات أساسية في Google Drive: <strong>Google Forms، Google Docs، Google Sheets، وGoogle Slides/Drive</strong>. تدربي هنا عملياً على بناء الاستبانة وتنظيم ملف الأنشطة الإلكتروني.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: Interactive Archive Folder Organizer (Page 4 item 7) -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-extrabold text-base text-slate-900">التدريب الأول: هيكلة «ملف البرامج والأنشطة القرآنية» على Google Drive</h3>
+              <p class="text-xs text-slate-500">حسب الشرط رقم (7) في صفحة 4 والشرط (8)، اختاري المستندات الـ 5 الصحيحة التي يجب حفظها في ملف الأنشطة بالمركز واستبعدي المخالفات:</p>
+            </div>
+          </div>
+
+          <div id="driveFilesList" class="space-y-2 text-xs">
+            <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" class="drive-item w-4 h-4 accent-teal-700" data-correct="true">
+                <span class="font-bold text-slate-800">📄 الخطة السنوية أو الفصلية للأنشطة (Google Docs / Sheets)</span>
+              </div>
+              <span class="text-[11px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded">مستند أساسي</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" class="drive-item w-4 h-4 accent-teal-700" data-correct="true">
+                <span class="font-bold text-slate-800">📋 بطاقة التحقق والمتابعة وتوزيع المهام لكل نشاط</span>
+              </div>
+              <span class="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded">مستند أساسي</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" class="drive-item w-4 h-4 accent-teal-700" data-correct="true">
+                <span class="font-bold text-slate-800">📊 التقرير الختامي للنشاط مع الصور المختارة والإحصائيات</span>
+              </div>
+              <span class="text-[11px] bg-purple-50 text-purple-700 px-2 py-0.5 rounded">مستند أساسي</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" class="drive-item w-4 h-4 accent-teal-700" data-correct="true">
+                <span class="font-bold text-slate-800">✍️ الموافقات الكتابية من أولياء الأمور لمشاركة الطلبة</span>
+              </div>
+              <span class="text-[11px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded">شرط إلزامي (ص4)</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" class="drive-item w-4 h-4 accent-teal-700" data-correct="true">
+                <span class="font-bold text-slate-800">🏛️ نسخ الموافقات الرسمية (الأوقاف / شؤون القرآن / تصريح التبرعات)</span>
+              </div>
+              <span class="text-[11px] bg-teal-50 text-teal-800 px-2 py-0.5 rounded">مرفقات تنظيمية</span>
+            </label>
+
+            <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <div class="flex items-center gap-2.5">
+                <input type="checkbox" class="drive-item w-4 h-4 accent-rose-600" data-correct="false">
+                <span class="font-bold text-slate-800">❌ قوائم أنشطة مختلطة تجمع البنين والبنات في نشاط واحد</span>
+              </div>
+              <span class="text-[11px] bg-rose-50 text-rose-700 px-2 py-0.5 rounded">فخ اختباري</span>
+            </label>
+          </div>
+
+          <div class="flex items-center justify-between gap-2">
+            <button type="button" id="verifyDriveFolderBtn" class="bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition">
+              تحقق من صحة ملف الأنشطة على Google Drive ✓
+            </button>
+            <span id="driveFolderFeedback" class="text-xs font-bold text-slate-600">اختاري الـ 5 ملفات الصحيحة</span>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Google Forms Builder Simulator -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+          <div>
+            <h3 class="font-extrabold text-base text-slate-900">التدريب الثاني: محاكي تصميم استبانة في Google Forms</h3>
+            <p class="text-xs text-slate-500">
+              في الاختبار العملي قد يُطلب منكِ إنشاء نموذج استبانة تقييم نشاط أو نموذج موافقة ولي أمر. اختاري القالب أدناه لمعاينة الأسئلة النموذجية وإضافة سؤال جديد:
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <button type="button" data-form-template="student" class="form-template-btn bg-purple-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition">
+              1. استبانة تقييم الطالب للنشاط (ص9)
+            </button>
+            <button type="button" data-form-template="parent" class="form-template-btn bg-slate-100 text-slate-800 hover:bg-slate-200 text-xs font-bold px-3 py-2 rounded-xl transition">
+              2. استبانة وموافقة ولي الأمر (ص4 وص10)
+            </button>
+          </div>
+
+          <!-- Simulated Google Form Card -->
+          <div class="border-t-8 border-purple-700 bg-purple-50/40 rounded-xl p-4 border border-slate-200 space-y-3">
+            <div>
+              <h4 id="gFormTitle" class="font-extrabold text-sm text-slate-900">استبانة تقييم نشاط قرآني (الطلاب)</h4>
+              <p id="gFormDesc" class="text-xs text-slate-600">تهدف هذه الاستبانة إلى قياس أثر النشاط التربوي وتطوير البرامج والأنشطة بالمركز.</p>
+            </div>
+
+            <div id="gFormQuestionsList" class="space-y-2 text-xs"></div>
+
+            <!-- Add Custom Question -->
+            <div class="pt-2 border-t border-slate-200 flex flex-col sm:flex-row gap-2">
+              <input id="newFormQuestionInput" type="text" placeholder="أضيفي سؤالاً جديداً للاستبانة (مثال: ما مقترحاتك لتطوير النشاط؟)" class="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-xs bg-white" />
+              <select id="newFormQuestionType" class="rounded-lg border border-slate-300 px-2 py-1.5 text-xs bg-white">
+                <option value="مقياس خطي (1 إلى 5)">مقياس خطي (1 إلى 5)</option>
+                <option value="خيارات متعددة">خيارات متعددة</option>
+                <option value="إجابة قصيرة (مقترحات)">إجابة قصيرة (مقترحات)</option>
+              </select>
+              <button type="button" id="addFormQuestionBtn" class="bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg shrink-0 transition">
+                + إضافة سؤال
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Reference of the 4 Google Drive Apps on Page 15 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+            <div class="p-2.5 rounded-xl bg-purple-50 border border-purple-200">
+              <div class="font-extrabold text-purple-900">Google Forms</div>
+              <div class="text-[11px] text-purple-800 mt-0.5">الاستبانات والتسجيل والموافقات</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-blue-50 border border-blue-200">
+              <div class="font-extrabold text-blue-900">Google Docs</div>
+              <div class="text-[11px] text-blue-800 mt-0.5">التقرير الختامي والخطط</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+              <div class="font-extrabold text-emerald-900">Google Sheets</div>
+              <div class="text-[11px] text-emerald-800 mt-0.5">الميزانيات والرسوم البيانية</div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200">
+              <div class="font-extrabold text-amber-900">Google Slides</div>
+              <div class="text-[11px] text-amber-800 mt-0.5">عروض البرامج والحفلات</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: MOCK PRACTICAL & SITUATIONAL EXAM ==================== -->
+    <section id="tab-exam" class="tab-panel hidden space-y-6">
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-rose-800 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">محاكاة حقيقية لأسئلة اللجنة والاختبار العملي</span>
+          <h2 class="text-xl font-extrabold text-slate-900 mt-1">الاختبار التجريبي الشامل والمواقف الإدارية (10 أسئلة تطبيقية)</h2>
+          <p class="text-xs md:text-sm text-slate-600">
+            يغطي هذا الاختبار جميع التفاصيل الدقيقة الواردة في الـ 16 شريحة (اشتراطات إقامة النشاط، إدارة المخاطر، معادلات الإكسل، نظام اقرأ، والمسؤوليات). أجيبي عن الأسئلة للحصول على التفسير النموذجي والدرجة النهائية.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <div class="bg-slate-100 px-4 py-2 rounded-xl border border-slate-200 text-center">
+            <div class="text-[11px] text-slate-500">نتيجة الاختبار</div>
+            <div id="quizScoreHeader" class="text-base font-extrabold text-teal-800">0 / 10</div>
+          </div>
+          <button type="button" id="resetQuizBtn" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-800 px-3.5 py-2.5 rounded-xl transition">
+            إعادة الاختبار
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Container -->
+      <div id="quizQuestionsContainer" class="space-y-4"></div>
+
+      <!-- Final Certificate / Summary Card -->
+      <div id="certificateCard" class="hidden bg-gradient-to-l from-teal-900 to-emerald-800 text-white rounded-2xl p-6 shadow-lg space-y-3">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="text-xs bg-amber-400 text-slate-950 font-extrabold px-3 py-0.5 rounded-full">شهادة اجتياز التدريب التحضيري</span>
+            <h3 id="certTitle" class="text-xl font-extrabold">أحسنتِ! أنتِ مستعدة لدخول الاختبار العملي بثقة وتفوق</h3>
+            <p id="certSubtitle" class="text-xs md:text-sm text-teal-100"></p>
+          </div>
+          <button type="button" data-goto="dashboard" class="goto-btn bg-white text-teal-900 font-bold text-xs px-4 py-2.5 rounded-xl shadow hover:bg-teal-50 transition">
+            العودة للوحة الجاهزية
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ==================== APPLICATION STATE ====================
+    const appState = {
+      activeTab: 'dashboard',
+      completedStations: {
+        dashboard: false,
+        excel: false,
+        planning: false,
+        gdrive: false,
+        exam: false
+      },
+      checkedRules: new Set(),
+      excelScenario: 'pdf', // 'pdf' or 'custom'
+      activeCell: 'D2',
+      chartData: {
+        labels: [
+          'إلمام المدرب بموضوع الدورة',
+          'قدرة المدرب على توصيل المعلومة',
+          'طريقة تقديم الدورة',
+          'مدة الدورة',
+          'مستوى التنظيم'
+        ],
+        female: [4.9, 4.8, 4.6, 4.7, 4.6],
+        male: [4.6, 4.7, 4.2, 4.5, 4.5]
+      },
+      formTemplates: {
+        student: {
+          title: 'استبانة تقييم الطالب للنشاط التربوي (صفحة 9)',
+          desc: 'تعبئة الاستبانة تسهم في تطوير البرامج والأنشطة القرآنية بالمركز وتحسين مخرجاتها.',
+          questions: [
+            { q: 'ما مدى استفادتك من القيم التربوية القرآنية في هذا النشاط؟', type: 'مقياس خطي (1 إلى 5)' },
+            { q: 'ما تقييمك لمستوى التنظيم ووسائل الأمن والسلامة في مكان النشاط؟', type: 'مقياس خطي (1 إلى 5)' },
+            { q: 'ما مقترحاتك لتطوير البرنامج التربوي القادم في المركز؟', type: 'إجابة قصيرة (مقترحات)' }
+          ]
+        },
+        parent: {
+          title: 'استبانة وموافقة ولي أمر الطالب عن مشاركة ابنه (برنامج اقرأ - صفحة 4 و10)',
+          desc: 'نموذج الموافقة الكتابية المسبقة وتقييم ولي الأمر لمشاركة ابنه في أنشطة المركز.',
+          questions: [
+            { q: 'أوافق خطياً على مشاركة ابني/ابنتي في النشاط المزمع إقامته بالمركز:', type: 'خيارات متعددة (نعم أوافق / لا أوافق)' },
+            { q: 'ما مدى رضاكم عن أثر الأنشطة القرآنية في تشجيع ابنكم على الحضور للمركز؟', type: 'مقياس خطي (1 إلى 5)' },
+            { q: 'مقترحات ولي الأمر لتطوير البرامج والأنشطة التربوية بالمركز:', type: 'إجابة قصيرة (مقترحات)' }
+          ]
+        }
+      },
+      currentFormTemplate: 'student',
+      quizAnswers: {}
+    };
+
+    // ==================== QUIZ QUESTIONS (10 PRACTICAL & REGULATORY QUESTIONS) ====================
+    const quizData = [
+      {
+        id: 1,
+        question: '1. يرغب المركز في تنظيم محاضرة قرآنية واستضافة محاضر من داخل أو خارج مملكة البحرين. ما الإجراء النظامي الصحيح وفق اشتراطات الصفحة (3)؟',
+        options: [
+          'أخذ موافقة شفهية من مدير المركز قبل يومين من المحاضرة فقط',
+          'أن يكون المحاضر حاصلاً على مؤهل علمي معترف به في مملكة البحرين (أو ما يتناسب مع نوع النشاط) والحصول على موافقة مسبقة بأسبوعين من إدارة شؤون القرآن الكريم',
+          'مخاطبة إدارة الأوقاف بعد انتهاء المحاضرة لإشعارهم باسم المحاضر',
+          'الإعلان عن المحاضرة مباشرة في وسائل التواصل ثم تسجيلها لاحقاً'
+        ],
+        correct: 1,
+        explanation: 'نص البند (5) في صفحة 3 صراحةً على وجوب حصول المحاضر على مؤهل علمي معترف به في مملكة البحرين أو ما يتناسب مع النشاط، والحصول على الموافقة المسبقة بأسبوعين من إدارة شؤون القرآن الكريم.'
+      },
+      {
+        id: 2,
+        question: '2. يعتزم المركز تنظيم رحلة طلابية يشارك فيها (60 طالباً). كم عدد المشرفين المطلوب توفيرهم وفق البند (6) في صفحة 3 وآلية إدارة المخاطر في صفحة 6؟',
+        options: [
+          'مشرف واحد فقط لجميع الطلاب',
+          'مشرفان اثنان فقط بدون مشرف إداري',
+          'تعيين مشرف إداري يتحمل مسؤولية الطلبة + 4 مشرفين للمجموعات (بمعدل شخص مسؤول عن كل 15 طالباً)',
+          'تخصيص مشرف لكل 30 طالباً فقط'
+        ],
+        correct: 2,
+        explanation: 'القاعدة الذهبية في الملف (ص3 وص6): تعيين مشرف إداري على كل رحلة يتحمل مسؤولية الطلبة، وتخصيص شخص مسؤول عن كل 15 طالباً (60 ÷ 15 = 4 مشرفي مجموعات + 1 مشرف إداري).'
+      },
+      {
+        id: 3,
+        question: '3. في الاختبار العملي لبرنامج Excel (صفحة 13)، إذا كانت تكلفة الفطور (50)، الجوائز (20)، طباعة المذكرات (10)، وكانت المصروفات الفعلية (70). ما قيمة (المجموع) وقيمة (الفائض)؟',
+        options: [
+          'المجموع = 70 ، والفائض = 20',
+          'المجموع = 80 (باستخدام دالة الجمع SUM)، والفائض = 10 (حاصل طرح المصروفات 70 من المجموع 80)',
+          'المجموع = 150 ، والفائض = 80',
+          'المجموع = 80 ، والفائض = 70'
+        ],
+        correct: 1,
+        explanation: 'في جدول ميزانية إقامة نشاط (صفحة 13): المجموع = 50 + 20 + 10 = 80، والفائض = المجموع (80) - المصروفات (70) = 10.'
+      },
+      {
+        id: 4,
+        question: '4. عند الرغبة في استخدام مرافق وأدوات المسجد لإقامة نشاط قرآني، أو الرغبة في إقامة (طبق خيري / توزيع حصالات) لجمع تبرعات لصالح المركز، ما الجهات الواجب أخذ موافقتها؟',
+        options: [
+          'مرافق المسجد تتطلب موافقة مسبقة من (إدارة الأوقاف)، وجمع التبرعات يتطلب تصريحاً من (وزارة العدل والشؤون الإسلامية والأوقاف)',
+          'لا يلزم أي تصريح طالما النشاط داخل المركز',
+          'يكفي إشعار أولياء الأمور عبر استبانة Google Forms',
+          'تؤخذ الموافقة من مشرف الرحلة فقط'
+        ],
+        correct: 0,
+        explanation: 'البند (4) ص2: استخدام مرافق وأدوات المسجد يتطلب موافقة مسبقة من إدارة الأوقاف. البند (6) ص8: جمع التبرعات كطبق خيري أو حصالات يتطلب تصريحاً من وزارة العدل والشؤون الإسلامية والأوقاف.'
+      },
+      {
+        id: 5,
+        question: '5. ما الفترة الزمنية المعتمدة لتسجيل الأنشطة والبرامج في موقع «اقرأ» الإلكتروني، وكيف يتم تقييمها (صفحة 11)؟',
+        options: [
+          'يبدأ التسجيل من 1 يناير حتى 30 يونيو، والتقييم سنوي فقط',
+          'يبدأ التسجيل من 1 سبتمبر حتى 30 أغسطس من كل عام، ويتم تقييم الأنشطة من قبل الأخصائي بشكل يومي وعلى المنسق المتابعة ومراجعة الأخصائي مباشرة عن أي ملاحظة',
+          'التسجيل مفتوح يوم الاختبار فقط دون متابعة',
+          'يتم التسجيل ورقياً فقط ولا يوجد تقييم يومي'
+        ],
+        correct: 1,
+        explanation: 'وفق صفحة 11 (آلية عمل البرامج والأنشطة القرآنية): يبدأ التسجيل من 1 سبتمبر حتى 30 أغسطس من كل عام، ويقيّم الأخصائي الأنشطة بشكل يومي وعلى المنسق المتابعة الفورية.'
+      },
+      {
+        id: 6,
+        question: '6. ما المحتويات الإلزامية التي يجب أن تُحفظ في «ملف البرامج والأنشطة القرآنية» بالمركز للرجوع إليها عند الحاجة (صفحة 4)؟',
+        options: [
+          'صور النشاط فقط بدون خطط أو تقارير',
+          'الخطة السنوية + بطاقة التحقق والمتابعة + التقرير الختامي + كل ما يخص البرامج والأنشطة (بما فيها الموافقات الكتابية لأولياء الأمور)',
+          'أسماء المحاضرين فقط',
+          'جدول الحصص الأسبوعي لمعلمي التلاوة فقط'
+        ],
+        correct: 1,
+        explanation: 'البند (7) و(8) في صفحة 4 ينصان على تخصيص ملف للبرامج والأنشطة القرآنية تحفظ فيه (الخطة السنوية - بطاقة التحقق والمتابعة - التقرير الختامي - وكل ما يخص البرامج) مع الاحتفاظ بالموافقة الكتابية لولي الأمر.'
+      },
+      {
+        id: 7,
+        question: '7. أي من الآتي يُعد من «آليات إدارة المخاطر المحتملة» في البرامج والأنشطة القرآنية كما ورد في صفحة (6)؟',
+        options: [
+          'إلغاء جميع الأنشطة القرآنية تجنباً للمسؤولية',
+          'توفير وسائل وإرشادات الأمن والسلامة، رفع الوعي لدى الطلاب، تنظيم دورة حريق، تنظيم دورة الإسعافات الأولية، وتوفير مشرف لكل 15 طالباً',
+          'الاعتماد على الطلاب الأكبر سناً في الإشراف دون تدريب',
+          'إقامة الأنشطة في الأماكن المرتفعة أو البرك العميقة لتعويد الطلاب'
+        ],
+        correct: 1,
+        explanation: 'صفحة 6 حددت 5 آليات واضحة لإدارة المخاطر: وسائل وإرشادات السلامة، رفع وعي الطلاب، دورة حريق، دورة إسعافات أولية، ومشرف لكل 15 طالباً.'
+      },
+      {
+        id: 8,
+        question: '8. كيف يقوم المنسق بتعزيز الدور الإعلامي للبرامج والأنشطة القرآنية التي ينظمها المركز وفق الصفحة (8)؟',
+        options: [
+          'تزويد قسم البرامج والأنشطة القرآنية بتقرير مبسط يحتوي على المعلومات الرئيسية للنشاط مع صور مختارة لنشرها على حسابات الوزارة ووسائل الإعلام',
+          'نشر صور الطلاب دون موافقة أو تقرير',
+          'الاحتفاظ بالصور في الهاتف الشخصي فقط',
+          'إرسال رسائل نصية عشوائية'
+        ],
+        correct: 0,
+        explanation: 'البند (4) في صفحة 8: تعزيز الدور الإعلامي بتزويد قسم البرامج والأنشطة القرآنية بتقرير مبسط يحتوي على المعلومات الرئيسية للنشاط مع صور مختارة لنشرها على حسابات الوزارة ووسائل الإعلام.'
+      },
+      {
+        id: 9,
+        question: '9. ما الترتيب الصحيح لخطوات العمل في «برنامج التربية القرآنية» كما ورد في الصفحة (14)؟',
+        options: [
+          'تنفيذ النشاط أولاً ثم البحث عن هدف مناسب بعد انتهائه',
+          'تحديد الهدف ← اختيار المجالات التربوية المناسبة ← ثم تنفيذ النشاط',
+          'كتابة التقرير الختامي قبل تحديد الهدف',
+          'شراء الجوائز أولاً دون ربطها بمجالات التربية القرآنية'
+        ],
+        correct: 1,
+        explanation: 'نصت الصفحة 14 على التسلسل المنهجي: (تحديد الهدف واختيار المجالات التربوية المناسبة ثم تنفيذ النشاط).'
+      },
+      {
+        id: 10,
+        question: '10. كيف يشارك كل من (الطالب) و(ولي الأمر) في تقييم وتطوير الأنشطة التربوية بالمركز وفق الصفحتين (9 و10)؟',
+        options: [
+          'لا يوجد دور للطالب أو ولي الأمر في التقييم',
+          'يقوم الطالب بتعبئة استبانات تقييم الأنشطة وتقديم المقترحات، ويقوم ولي الأمر بتعبئة استبانة ولي أمر الطالب عن مشاركة ابنه (في برنامج اقرأ حالياً) وتقديم المقترحات',
+          'يقتصر دور ولي الأمر على دفع الرسوم فقط',
+          'يقيّم الطالب أداء المنسق المالي فقط'
+        ],
+        correct: 1,
+        explanation: 'صفحة 9 و10: يشارك الطالب وولي الأمر بفاعلية من خلال تعبئة استبانات التقييم (استبانة ولي أمر الطالب عن مشاركة ابنه في برنامج اقرأ حالياً) وتقديم المقترحات لتحسين مخرجات البرنامج التربوي.'
+      }
+    ];
+
+    // ==================== HELPER: TOAST NOTIFICATION ====================
+    let toastTimer = null;
+    function showToast(message, icon = '✅') {
+      const box = document.getElementById('toastBox');
+      const msgEl = document.getElementById('toastMessage');
+      const iconEl = document.getElementById('toastIcon');
+      msgEl.textContent = message;
+      iconEl.textContent = icon;
+      box.classList.remove('hidden');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.add('hidden');
+      }, 3500);
+    }
+
+    // ==================== OVERALL READINESS UPDATER ====================
+    function updateOverallProgress() {
+      const keys = Object.keys(appState.completedStations);
+      let completedCount = 0;
+      keys.forEach((k) => {
+        const badge = document.getElementById('badge-' + k);
+        if (appState.completedStations[k]) {
+          completedCount++;
+          if (badge) badge.classList.remove('hidden');
+        } else if (badge) {
+          badge.classList.add('hidden');
+        }
+      });
+      const pct = Math.round((completedCount / keys.length) * 100);
+      document.getElementById('overallScoreText').textContent = pct + '%';
+      document.getElementById('completedBadgesText').textContent = `(${completedCount}/${keys.length} محطات مكتملة)`;
+      document.getElementById('overallProgressBar').style.width = pct + '%';
+    }
+
+    // ==================== TAB NAVIGATION ====================
+    function switchTab(tabId) {
+      appState.activeTab = tabId;
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.add('hidden');
+      });
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab').forEach((btn) => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('tab-active');
+          btn.classList.remove('text-teal-100');
+        } else {
+          btn.classList.remove('tab-active');
+          btn.classList.add('text-teal-100');
+        }
+      });
+
+      if (tabId === 'excel' && evalChartInstance) {
+        setTimeout(() => evalChartInstance.resize(), 60);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==================== TAB 1: DASHBOARD LOGIC ====================
+    function updateSupervisorCalculator() {
+      const input = document.getElementById('studentCountInput');
+      const val = Math.max(1, parseInt(input.value, 10) || 1);
+      const groupSups = Math.ceil(val / 15);
+      const totalSups = groupSups + 1; // +1 administrative supervisor
+      document.getElementById('groupSupervisorsOutput').textContent = `${groupSups} مشرفين (${val} ÷ 15)`;
+      document.getElementById('totalSupervisorsOutput').textContent = `${totalSups} مسؤولين (${groupSups} للمجموعات + 1 إداري)`;
+    }
+
+    // ==================== TAB 2: EXCEL & CHART.JS SIMULATOR ====================
+    let evalChartInstance = null;
+
+    function initEvaluationChart() {
+      const ctx = document.getElementById('evaluationChart').getContext('2d');
+      evalChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: appState.chartData.labels,
+          datasets: [
+            {
+              label: 'أنثى',
+              data: [...appState.chartData.female],
+              backgroundColor: '#65a30d',
+              borderRadius: 4
+            },
+            {
+              label: 'ذكر',
+              data: [...appState.chartData.male],
+              backgroundColor: '#2563eb',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              min: 3.8,
+              max: 5.0,
+              ticks: {
+                stepSize: 0.2
+              }
+            },
+            x: {
+              ticks: {
+                font: {
+                  family: 'Tajawal',
+                  size: 10
+                }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'left',
+              labels: {
+                font: {
+                  family: 'Tajawal',
+                  size: 11
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function evaluateExcelFormula(rawStr, a, b, c, dTotal, eExp) {
+      if (!rawStr) return NaN;
+      const clean = rawStr.toString().trim().toUpperCase().replace(/\s+/g, '');
+      const numVal = Number(clean);
+      if (!Number.isNaN(numVal) && clean !== '') return numVal;
+
+      if (clean === '=SUM(A2:C2)' || clean === '=SUM(A2,B2,C2)' || clean === '=A2+B2+C2' || clean === '=C2+B2+A2') {
+        return a + b + c;
+      }
+      if (clean === '=D2-E2') {
+        return dTotal - eExp;
+      }
+      if (clean === '=(A2+B2+C2)-E2' || clean === '=SUM(A2:C2)-E2') {
+        return (a + b + c) - eExp;
+      }
+      return NaN;
+    }
+
+    function checkExcelSolution() {
+      const a = Number(document.getElementById('cellA2').value) || 0;
+      const b = Number(document.getElementById('cellB2').value) || 0;
+      const c = Number(document.getElementById('cellC2').value) || 0;
+      const e = Number(document.getElementById('cellE2').value) || 0;
+      const expectedTotal = a + b + c;
+      const expectedSurplus = expectedTotal - e;
+
+      const rawD = document.getElementById('cellD2').value.trim();
+      const rawF = document.getElementById('cellF2').value.trim();
+
+      const calcD = evaluateExcelFormula(rawD, a, b, c, expectedTotal, e);
+      const calcF = evaluateExcelFormula(rawF, a, b, c, expectedTotal, e);
+
+      const badge = document.getElementById('excelResultBadge');
+      const usedFormulaD = rawD.startsWith('=');
+      const usedFormulaF = rawF.startsWith('=');
+
+      if (calcD === expectedTotal && calcF === expectedSurplus) {
+        document.getElementById('cellD2').value = expectedTotal;
+        document.getElementById('cellF2').value = expectedSurplus;
+        appState.completedStations.excel = true;
+        updateOverallProgress();
+        badge.className = 'text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-300';
+        badge.textContent = `إجابة ممتازة! المجموع = ${expectedTotal} ، والفائض = ${expectedSurplus} ${usedFormulaD || usedFormulaF ? '(باستخدام المعادلات الصحيحة)' : ''}`;
+        showToast('أحسنتِ! تم اجتياز تمرين الإكسل وحساب الميزانية بنجاح.');
+      } else {
+        badge.className = 'text-xs font-bold px-3 py-1.5 rounded-lg bg-rose-100 text-rose-900 border border-rose-300';
+        badge.textContent = `تأكدي من الحل: المجموع الصحيح هو (${expectedTotal}) بكتابة =SUM(A2:C2)، والفائض هو (${expectedSurplus}) بكتابة =D2-E2`;
+        showToast('راجعي المعادلة في خلية المجموع أو الفائض وحاولي مرة أخرى', '⚠️');
+      }
+    }
+
+    // ==================== TAB 3: PEDAGOGICAL PLANNING LOGIC ====================
+    function evaluatePedagogicalPlan() {
+      const name = document.getElementById('planActivityName').value.trim();
+      const type = document.getElementById('planActivityType').value;
+      const domain = document.getElementById('planDomain').value;
+      const comp = document.getElementById('planCompetency').value.trim();
+      const goal = document.getElementById('planGoal').value.trim();
+      const report = document.getElementById('planMediaReport').value.trim();
+
+      const c1 = document.getElementById('chkParentConsent').checked;
+      const c2 = document.getElementById('chkSafetyCheck').checked;
+      const c3 = document.getElementById('chkTaskDist').checked;
+      const c4 = document.getElementById('chkIqraaReg').checked;
+
+      const checks = [
+        { ok: name.length >= 4 && type !== '', label: 'تحديد اسم النشاط ونوعه في الخطة السنوية/الفصلية' },
+        { ok: domain !== '' && comp.length >= 4, label: 'ربط النشاط بمجالات وكفايات برنامج التربية القرآنية (ص7 وص14)' },
+        { ok: goal.length >= 8, label: 'صياغة هدف تربوي واضح قبل تنفيذ النشاط (ص14)' },
+        { ok: c1 && c2 && c3 && c4, label: 'استيفاء عناصر بطاقة التحقق والمتابعة وموافقة ولي الأمر والتسجيل في «اقرأ»' },
+        { ok: report.length >= 15, label: 'إعداد التقرير الإعلامي المبسط لقسم البرامج والأنشطة القرآنية مع الصور (ص8)' }
+      ];
+
+      const passed = checks.filter((item) => item.ok).length;
+      const listEl = document.getElementById('planChecklistResult');
+      listEl.innerHTML = checks.map((item) => `
+        <div class="flex items-center gap-2 p-2 rounded-lg ${item.ok ? 'bg-emerald-50 text-emerald-900' : 'bg-rose-50 text-rose-900'}">
+          <span>${item.ok ? '✅' : '❌'}</span>
+          <span class="font-medium">${item.label}</span>
+        </div>
+      `).join('');
+
+      const badge = document.getElementById('planScoreBadge');
+      const feedbackText = document.getElementById('planFeedbackText');
+
+      if (passed === checks.length) {
+        appState.completedStations.planning = true;
+        updateOverallProgress();
+        badge.className = 'text-xs font-bold px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-900 border border-emerald-300';
+        badge.textContent = 'مكتمل بتفوق (5 / 5 معايير مستوفاة)';
+        feedbackText.textContent = 'تقييم الأخصائي اليومي: خطة نموذجية متكاملة تربط النشاط بمجالات وكفايات التربية القرآنية وتستوفي بطاقة المتابعة والتقرير الإعلامي.';
+        showToast('تم اعتماد الخطة التربوية وبطاقة المتابعة بنجاح!');
+      } else {
+        badge.className = 'text-xs font-bold px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-300';
+        badge.textContent = `مستوفى ${passed} من 5 معايير`;
+        feedbackText.textContent = 'ملاحظة أخصائي الأنشطة: يرجى استكمال البنود المشار إليها بعلامة (❌) أعلاه ليتم قبول النشاط في موقع «اقرأ».';
+        showToast('يرجى استكمال كافة حقول الخطة وبطاقة المتابعة', 'ℹ️');
+      }
+    }
+
+    // ==================== TAB 4: GOOGLE DRIVE & FORMS LAB ====================
+    function renderGoogleFormPreview() {
+      const tpl = appState.formTemplates[appState.currentFormTemplate];
+      document.getElementById('gFormTitle').textContent = tpl.title;
+      document.getElementById('gFormDesc').textContent = tpl.desc;
+      const container = document.getElementById('gFormQuestionsList');
+      container.innerHTML = tpl.questions.map((item, idx) => `
+        <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center justify-between gap-2">
+          <div>
+            <div class="font-bold text-slate-800">${idx + 1}. ${item.q}</div>
+            <div class="text-[11px] text-purple-700 font-medium mt-0.5">نوع السؤال: ${item.type}</div>
+          </div>
+          <span class="text-xs text-slate-400">مطلوب *</span>
+        </div>
+      `).join('');
+    }
+
+    // ==================== TAB 5: QUIZ RENDERER & GRADING ====================
+    function renderQuiz() {
+      const container = document.getElementById('quizQuestionsContainer');
+      container.innerHTML = quizData.map((q) => {
+        const selected = appState.quizAnswers[q.id];
+        const isAnswered = selected !== undefined;
+        return `
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+            <h3 class="font-extrabold text-sm md:text-base text-slate-900">${q.question}</h3>
+            <div class="space-y-2">
+              ${q.options.map((opt, oIdx) => {
+                let btnStyle = 'border-slate-200 hover:bg-slate-50 text-slate-800';
+                if (isAnswered) {
+                  if (oIdx === q.correct) {
+                    btnStyle = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-bold';
+                  } else if (oIdx === selected && selected !== q.correct) {
+                    btnStyle = 'border-rose-400 bg-rose-50 text-rose-900';
+                  }
+                }
+                return `
+                  <button type="button" data-qid="${q.id}" data-oidx="${oIdx}" class="quiz-opt-btn w-full text-right text-xs md:text-sm p-3 rounded-xl border transition flex items-center justify-between gap-2 ${btnStyle}">
+                    <span>${opt}</span>
+                    <span>${isAnswered && oIdx === q.correct ? '✅' : (isAnswered && oIdx === selected && selected !== q.correct ? '❌' : '')}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+            ${isAnswered ? `
+              <div class="p-3 rounded-xl text-xs ${selected === q.correct ? 'bg-emerald-50 text-emerald-900 border border-emerald-200' : 'bg-amber-50 text-amber-950 border border-amber-200'}">
+                <strong>المرجع من ملف الورشة:</strong> ${q.explanation}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      // Attach listeners
+      container.querySelectorAll('.quiz-opt-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const qid = Number(btn.getAttribute('data-qid'));
+          const oidx = Number(btn.getAttribute('data-oidx'));
+          appState.quizAnswers[qid] = oidx;
+          updateQuizScore();
+          renderQuiz();
+        });
+      });
+    }
+
+    function updateQuizScore() {
+      let score = 0;
+      const answeredCount = Object.keys(appState.quizAnswers).length;
+      quizData.forEach((q) => {
+        if (appState.quizAnswers[q.id] === q.correct) score++;
+      });
+      document.getElementById('quizScoreHeader').textContent = `${score} / ${quizData.length}`;
+
+      const cert = document.getElementById('certificateCard');
+      if (answeredCount === quizData.length) {
+        cert.classList.remove('hidden');
+        document.getElementById('certSubtitle').textContent = `حصلتِ على ${score} من ${quizData.length} في الاختبار التجريبي الشامل لمهارات وضوابط منسقة الأنشطة والبرامج القرآنية.`;
+        if (score >= 8) {
+          appState.completedStations.exam = true;
+          updateOverallProgress();
+          showToast(`مبارك! اجتزتِ الاختبار التجريبي بنتيجة ${score} من 10`);
+        }
+      } else {
+        cert.classList.add('hidden');
+      }
+    }
+
+    // ==================== INITIALIZATION & EVENT LISTENERS ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      // Tab switching
+      document.querySelectorAll('.nav-tab').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          switchTab(btn.getAttribute('data-tab'));
+        });
+      });
+
+      document.querySelectorAll('.goto-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          switchTab(btn.getAttribute('data-goto'));
+        });
+      });
+
+      // Reset all button
+      document.getElementById('resetAllBtn').addEventListener('click', () => {
+        Object.keys(appState.completedStations).forEach((k) => {
+          appState.completedStations[k] = false;
+        });
+        appState.checkedRules.clear();
+        document.querySelectorAll('.rule-check').forEach((c) => { c.checked = false; });
+        document.getElementById('checkedRulesCount').textContent = 'تمت مراجعة 0 من 8 ضوابط';
+        appState.quizAnswers = {};
+        updateQuizScore();
+        renderQuiz();
+        updateOverallProgress();
+        showToast('تمت إعادة ضبط مؤشر الجاهزية وجميع التمارين', '🔄');
+      });
+
+      // Tab 1: Rules checklist & Supervisor calculator
+      document.querySelectorAll('.rule-check').forEach((chk) => {
+        chk.addEventListener('change', () => {
+          const r = chk.getAttribute('data-rule');
+          if (chk.checked) appState.checkedRules.add(r);
+          else appState.checkedRules.delete(r);
+          document.getElementById('checkedRulesCount').textContent = `تمت مراجعة ${appState.checkedRules.size} من 8 ضوابط`;
+          if (appState.checkedRules.size === 8) {
+            appState.completedStations.dashboard = true;
+            updateOverallProgress();
+            showToast('أحسنتِ! أتممتِ مراجعة جميع الضوابط والتصاريح الثمانية.');
+          }
+        });
+      });
+
+      document.getElementById('studentCountInput').addEventListener('input', updateSupervisorCalculator);
+
+      document.getElementById('markDashboardDoneBtn').addEventListener('click', () => {
+        appState.completedStations.dashboard = true;
+        updateOverallProgress();
+        switchTab('excel');
+        showToast('تم تأكيد إتقان الضوابط! ابدئي الآن بالتدريب العملي على الإكسل.');
+      });
+
+      // Tab 2: Excel Simulator
+      initEvaluationChart();
+
+      document.querySelectorAll('.excel-cell').forEach((cell) => {
+        cell.addEventListener('focus', () => {
+          const cid = cell.getAttribute('data-cell');
+          appState.activeCell = cid;
+          document.getElementById('activeCellLabel').textContent = cid;
+          document.getElementById('formulaBarInput').value = cell.value;
+        });
+        cell.addEventListener('input', () => {
+          if (appState.activeCell === cell.getAttribute('data-cell')) {
+            document.getElementById('formulaBarInput').value = cell.value;
+          }
+        });
+      });
+
+      document.getElementById('formulaBarInput').addEventListener('input', (e) => {
+        const targetCell = document.getElementById('cell' + appState.activeCell);
+        if (targetCell) {
+          targetCell.value = e.target.value;
+        }
+      });
+
+      document.getElementById('checkExcelBtn').addEventListener('click', checkExcelSolution);
+
+      document.getElementById('autoSolveExcelBtn').addEventListener('click', () => {
+        document.getElementById('cellD2').value = '=SUM(A2:C2)';
+        document.getElementById('cellF2').value = '=D2-E2';
+        document.getElementById('formulaBarInput').value = '=SUM(A2:C2)';
+        checkExcelSolution();
+      });
+
+      document.getElementById('loadPdfScenarioBtn').addEventListener('click', () => {
+        document.getElementById('cellA2').value = 50;
+        document.getElementById('cellB2').value = 20;
+        document.getElementById('cellC2').value = 10;
+        document.getElementById('cellD2').value = '';
+        document.getElementById('cellE2').value = 70;
+        document.getElementById('cellF2').value = '';
+        document.getElementById('excelResultBadge').textContent = 'تم تحميل أرقام مثال الملف (50، 20، 10، والمصروفات 70)';
+        showToast('تم تحميل بيانات جدول ميزانية النشاط من الصفحة 13');
+      });
+
+      document.getElementById('loadNewScenarioBtn').addEventListener('click', () => {
+        document.getElementById('cellA2').value = 65;
+        document.getElementById('cellB2').value = 40;
+        document.getElementById('cellC2').value = 15;
+        document.getElementById('cellD2').value = '';
+        document.getElementById('cellE2').value = 95;
+        document.getElementById('cellF2').value = '';
+        document.getElementById('excelResultBadge').textContent = 'تحدي جديد: احسبي المجموع والفائض للأرقام الجديدة!';
+        showToast('تم تحميل تدريب إضافي بأرقام جديدة لاختبار سرعتكِ');
+      });
+
+      document.getElementById('showExcelHintBtn').addEventListener('click', () => {
+        const box = document.getElementById('excelHintBox');
+        box.classList.toggle('hidden');
+      });
+
+      // Chart interactive controls
+      const critSelect = document.getElementById('chartCriterionSelect');
+      const femInput = document.getElementById('femaleScoreInput');
+      const maleInput = document.getElementById('maleScoreInput');
+
+      critSelect.addEventListener('change', () => {
+        const idx = Number(critSelect.value);
+        femInput.value = appState.chartData.female[idx];
+        maleInput.value = appState.chartData.male[idx];
+      });
+
+      function updateChartFromInputs() {
+        const idx = Number(critSelect.value);
+        const fVal = Math.min(5, Math.max(3.8, Number(femInput.value) || 4.5));
+        const mVal = Math.min(5, Math.max(3.8, Number(maleInput.value) || 4.5));
+        appState.chartData.female[idx] = fVal;
+        appState.chartData.male[idx] = mVal;
+        if (evalChartInstance) {
+          evalChartInstance.data.datasets[0].data[idx] = fVal;
+          evalChartInstance.data.datasets[1].data[idx] = mVal;
+          evalChartInstance.update();
+        }
+      }
+
+      femInput.addEventListener('input', updateChartFromInputs);
+      maleInput.addEventListener('input', updateChartFromInputs);
+
+      // Tab 3: Pedagogical Plan
+      document.getElementById('fillSamplePlanBtn').addEventListener('click', () => {
+        document.getElementById('planActivityName').value = 'برنامج «بالقرآن نرتقي» لتدبر آيات الأخلاق وبر الوالدين';
+        document.getElementById('planActivityType').value = 'تربوي قيمي';
+        document.getElementById('planDomain').value = 'المجال الأخلاقي والسلوكي';
+        document.getElementById('planCompetency').value = 'كفاية التخلق بآداب القرآن الكريم وتوقير الوالدين';
+        document.getElementById('planGoal').value = 'غرس قيمة بر الوالدين والإحسان إليهما لدى 30 طالبة بالمركز من خلال تدبر سورة الإسراء وتطبيقاتها العملية';
+        document.getElementById('chkParentConsent').checked = true;
+        document.getElementById('chkSafetyCheck').checked = true;
+        document.getElementById('chkTaskDist').checked = true;
+        document.getElementById('chkIqraaReg').checked = true;
+        document.getElementById('planMediaReport').value = 'نظم مركز تحفيظ القرآن الكريم برنامج «بالقرآن نرتقي» بمشاركة 30 طالبة وتحت إشراف مشرفتين ملتزمتين بمعايير الأمن والسلامة، وهدف النشاط إلى ربط الطالبات بكفايات برنامج التربية القرآنية في بر الوالدين، ومرفق لكم 4 صور مختارة للنشر في حسابات الوزارة.';
+        evaluatePedagogicalPlan();
+      });
+
+      document.getElementById('evaluatePlanBtn').addEventListener('click', evaluatePedagogicalPlan);
+
+      // Tab 4: Google Drive & Forms Lab
+      document.getElementById('verifyDriveFolderBtn').addEventListener('click', () => {
+        const items = document.querySelectorAll('.drive-item');
+        let allCorrect = true;
+        items.forEach((item) => {
+          const shouldCheck = item.getAttribute('data-correct') === 'true';
+          if (item.checked !== shouldCheck) allCorrect = false;
+        });
+
+        const fb = document.getElementById('driveFolderFeedback');
+        if (allCorrect) {
+          appState.completedStations.gdrive = true;
+          updateOverallProgress();
+          fb.className = 'text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-lg';
+          fb.textContent = 'ممتاز! ملف البرامج والأنشطة على Google Drive منظم ومطابق لاشتراطات الوزارة.';
+          showToast('أحسنتِ! تم التحقق من هيكلة ملف Google Drive واستبانة Google Forms.');
+        } else {
+          fb.className = 'text-xs font-bold text-rose-800 bg-rose-100 px-3 py-1.5 rounded-lg';
+          fb.textContent = 'تأكدي من اختيار المستندات الـ 5 الأساسية فقط واستبعاد النشاط المختلط المخالف!';
+          showToast('تأكدي من تحديد الخمسة مستندات النظامية فقط واستبعاد المخالفة', '⚠️');
+        }
+      });
+
+      document.querySelectorAll('.form-template-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          appState.currentFormTemplate = btn.getAttribute('data-form-template');
+          document.querySelectorAll('.form-template-btn').forEach((b) => {
+            b.className = 'form-template-btn bg-slate-100 text-slate-800 hover:bg-slate-200 text-xs font-bold px-3 py-2 rounded-xl transition';
+          });
+          btn.className = 'form-template-btn bg-purple-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition';
+          renderGoogleFormPreview();
+        });
+      });
+
+      document.getElementById('addFormQuestionBtn').addEventListener('click', () => {
+        const qInput = document.getElementById('newFormQuestionInput');
+        const qType = document.getElementById('newFormQuestionType').value;
+        const text = qInput.value.trim();
+        if (!text) {
+          showToast('اكتبي نص السؤال أولاً لإضافته إلى نموذج Google Forms', 'ℹ️');
+          return;
+        }
+        appState.formTemplates[appState.currentFormTemplate].questions.push({
+          q: text,
+          type: qType
+        });
+        qInput.value = '';
+        renderGoogleFormPreview();
+        appState.completedStations.gdrive = true;
+        updateOverallProgress();
+        showToast('تمت إضافة السؤال بنجاح إلى استبانة Google Forms!');
+      });
+
+      renderGoogleFormPreview();
+
+      // Tab 5: Quiz
+      renderQuiz();
+      document.getElementById('resetQuizBtn').addEventListener('click', () => {
+        appState.quizAnswers = {};
+        updateQuizScore();
+        renderQuiz();
+        showToast('تمت إعادة ضبط أسئلة الاختبار التجريبي', '🔄');
+      });
+    });
+  </script>
+</body>
+</html>
