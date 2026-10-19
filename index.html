@@ -522,13 +522,31 @@
             </div>
 
             <div>
-              <label for="planDomain" class="block font-bold text-slate-700 mb-1">المجال التربوي (برنامج التربية القرآنية - ص14):</label>
+              <label for="planDomain" class="block font-bold text-slate-700 mb-1">المجال الرئيسي (من ملف كفايات التربية القرآنية المعتمد - 5 مجالات):</label>
               <select id="planDomain" class="w-full rounded-xl border border-slate-300 px-3 py-2 bg-white text-slate-900">
-                <option value="">-- اختاري المجال التربوي --</option>
-                <option value="المجال الإيماني والعقدي">المجال الإيماني والعقدي (تعظيم كلام الله)</option>
-                <option value="المجال الأخلاقي والسلوكي">المجال الأخلاقي والسلوكي (التخلق بآداب القرآن)</option>
-                <option value="المجال المهاري والعلمي">المجال المهاري والعلمي (التدبر وإتقان التلاوة)</option>
-                <option value="المجال الاجتماعي والوطني">المجال الاجتماعي والوطني (خدمة المجتمع والانتماء)</option>
+                <option value="">-- اختاري المجال الرئيسي --</option>
+                <option value="المجال الإيماني">1. المجال الإيماني (7 معايير فرعية)</option>
+                <option value="المجال العبادي">2. المجال العبادي (6 معايير فرعية)</option>
+                <option value="المجال السلوكي">3. المجال السلوكي (4 معايير فرعية)</option>
+                <option value="المجال الأسري والاجتماعي">4. المجال الأسري والاجتماعي (5 معايير فرعية)</option>
+                <option value="المجال النفسي وإدارة الذات">5. المجال النفسي وإدارة الذات (6 معايير فرعية)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="planSubDomain" class="block font-bold text-slate-700 mb-1">المجال الفرعي / المعيار (من الـ 28 معياراً في الملف):</label>
+              <select id="planSubDomain" class="w-full rounded-xl border border-slate-300 px-3 py-2 bg-white text-slate-900">
+                <option value="">-- اختاري المعيار الفرعي --</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="planStage" class="block font-bold text-slate-700 mb-1">المرحلة الدراسية المستهدفة (120 ساعة / 3 سنوات):</label>
+              <select id="planStage" class="w-full rounded-xl border border-slate-300 px-3 py-2 bg-white text-slate-900">
+                <option value="المرحلة الابتدائية (1-3)">المرحلة الابتدائية (1-3) — [26 كفاية]</option>
+                <option value="المرحلة الابتدائية (4-6)">المرحلة الابتدائية (4-6) — [35 كفاية]</option>
+                <option value="المرحلة الإعدادية" selected>المرحلة الإعدادية — [55 كفاية]</option>
+                <option value="المرحلة الثانوية">المرحلة الثانوية — [79 كفاية]</option>
               </select>
             </div>
 
@@ -615,6 +633,80 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Full Interactive Explorer of كفايات التربية القرآنية المعتمد Spreadsheet -->
+      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-xs font-extrabold bg-emerald-100 text-emerald-900 px-3 py-1 rounded-full border border-emerald-300">
+                مضاف من ملف Google Sheets المرفق: كفايات التربية القرآنية المعتمد
+              </span>
+              <span class="text-xs bg-amber-50 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-200 font-bold">
+                5 مجالات رئيسية • 28 مجالاً فرعياً • 120 ساعة لكل مرحلة خلال 3 سنوات
+              </span>
+            </div>
+            <h3 class="text-base md:text-lg font-extrabold text-slate-900 mt-1">
+              مستكشف مصفوفة «كفايات التربية القرآنية المعتمد» حسب المراحل العمرية والمناهج الدراسية
+            </h3>
+            <p class="text-xs text-slate-600">
+              تصفحي جميع المعايير الـ 28 والموضوعات والكفايات الموزعة على المراحل الأربع كما وردت في جدول <strong>النموذج المجمع للمجالات</strong>، واضغطي على <strong>«تطبيق في خطة النشاط ⬆️»</strong> لتعبئة نموذج الخطة أعلاه تلقائياً.
+            </p>
+          </div>
+
+          <!-- Summary Stats Pills from Sheet Row 2 -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs shrink-0 w-full lg:w-auto">
+            <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
+              <div class="font-extrabold text-teal-800 text-sm">26 كفاية</div>
+              <div class="text-[11px] text-slate-500">ابتدائية (1-3)</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
+              <div class="font-extrabold text-teal-800 text-sm">35 كفاية</div>
+              <div class="text-[11px] text-slate-500">ابتدائية (4-6)</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
+              <div class="font-extrabold text-teal-800 text-sm">55 كفاية</div>
+              <div class="text-[11px] text-slate-500">المرحلة الإعدادية</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
+              <div class="font-extrabold text-teal-800 text-sm">79 كفاية</div>
+              <div class="text-[11px] text-slate-500">المرحلة الثانوية</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div class="flex flex-wrap gap-1.5" id="kafayatDomainFilterBtns">
+            <button type="button" data-kdomain="all" class="kdomain-btn bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition">الكل (28 معياراً)</button>
+            <button type="button" data-kdomain="المجال الإيماني" class="kdomain-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition">1. المجال الإيماني (7)</button>
+            <button type="button" data-kdomain="المجال العبادي" class="kdomain-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition">2. المجال العبادي (6)</button>
+            <button type="button" data-kdomain="المجال السلوكي" class="kdomain-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition">3. المجال السلوكي (4)</button>
+            <button type="button" data-kdomain="المجال الأسري والاجتماعي" class="kdomain-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition">4. الأسري والاجتماعي (5)</button>
+            <button type="button" data-kdomain="المجال النفسي وإدارة الذات" class="kdomain-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition">5. النفسي وإدارة الذات (6)</button>
+          </div>
+          <input id="kafayatSearchInput" type="text" placeholder="ابحثي عن معيار أو كفاية (مثال: بر الوالدين، الطهارة، الوقت)..." class="rounded-xl border border-slate-300 px-3.5 py-1.5 text-xs sm:w-72 focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <!-- Matrix Table -->
+        <div class="overflow-x-auto max-h-96 custom-scroll border border-slate-200 rounded-xl">
+          <table class="w-full text-right text-xs border-collapse">
+            <thead class="bg-slate-100 text-slate-800 sticky top-0 z-10 shadow-sm">
+              <tr>
+                <th class="p-2.5 border-b border-slate-200 font-bold">المجال الرئيسي</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold">المجال الفرعي (المعيار)</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold">الموضوعات المعتمدة</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold">الابتدائية (1-3)</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold">الابتدائية (4-6)</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold">الإعدادية</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold">الثانوية</th>
+                <th class="p-2.5 border-b border-slate-200 font-bold text-center">إدراج بالخطة</th>
+              </tr>
+            </thead>
+            <tbody id="kafayatTableBody" class="divide-y divide-slate-200"></tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -768,7 +860,7 @@
       <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <span class="text-xs font-bold text-rose-800 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">محاكاة حقيقية لأسئلة اللجنة والاختبار العملي</span>
-          <h2 class="text-xl font-extrabold text-slate-900 mt-1">الاختبار التجريبي الشامل والمواقف الإدارية (10 أسئلة تطبيقية)</h2>
+          <h2 class="text-xl font-extrabold text-slate-900 mt-1">الاختبار التجريبي الشامل والمواقف الإدارية (12 سؤالاً تطبيقياً شاملاً ملف الكفايات)</h2>
           <p class="text-xs md:text-sm text-slate-600">
             يغطي هذا الاختبار جميع التفاصيل الدقيقة الواردة في الـ 16 شريحة (اشتراطات إقامة النشاط، إدارة المخاطر، معادلات الإكسل، نظام اقرأ، والمسؤوليات). أجيبي عن الأسئلة للحصول على التفسير النموذجي والدرجة النهائية.
           </p>
@@ -776,7 +868,7 @@
         <div class="flex items-center gap-3 shrink-0">
           <div class="bg-slate-100 px-4 py-2 rounded-xl border border-slate-200 text-center">
             <div class="text-[11px] text-slate-500">نتيجة الاختبار</div>
-            <div id="quizScoreHeader" class="text-base font-extrabold text-teal-800">0 / 10</div>
+            <div id="quizScoreHeader" class="text-base font-extrabold text-teal-800">0 / 12</div>
           </div>
           <button type="button" id="resetQuizBtn" class="text-xs font-bold bg-slate-200 hover:bg-slate-300 text-slate-800 px-3.5 py-2.5 rounded-xl transition">
             إعادة الاختبار
@@ -974,6 +1066,30 @@
         ],
         correct: 1,
         explanation: 'صفحة 9 و10: يشارك الطالب وولي الأمر بفاعلية من خلال تعبئة استبانات التقييم (استبانة ولي أمر الطالب عن مشاركة ابنه في برنامج اقرأ حالياً) وتقديم المقترحات لتحسين مخرجات البرنامج التربوي.'
+      },
+      {
+        id: 11,
+        question: '11. وفق ملف «كفايات التربية القرآنية المعتمد» (Google Sheets المرفق بالورشة)، كم عدد المجالات الرئيسية والمجالات الفرعية (المعايير)، وكم عدد الساعات المقررة لكل مرحلة خلال 3 سنوات؟',
+        options: [
+          '3 مجالات رئيسية و10 معايير فرعية فقط، بواقع 30 ساعة',
+          '5 مجالات رئيسية (الإيماني، العبادي، السلوكي، الأسري والاجتماعي، النفسي وإدارة الذات) و28 مجالاً فرعياً/موضوعاً، بواقع 120 ساعة لكل مرحلة خلال 3 سنوات',
+          'مجال واحد فقط بدون تقسيم للمراحل الدراسية',
+          '10 مجالات رئيسية بواقع 500 ساعة في السنة الواحدة'
+        ],
+        correct: 1,
+        explanation: 'في ملف «كفايات التربية القرآنية المعتمد» (ورقة النموذج المجمع للمجالات والنسخة الثانية): يتكون البرنامج من 5 مجالات رئيسية و28 مجالاً فرعياً وموضوعاً، وتوزع الكفايات على 4 مراحل دراسية (ابتدائية 1-3: 26 كفاية، ابتدائية 4-6: 35 كفاية، إعدادية: 55 كفاية، ثانوية: 79 كفاية) بمعدل 120 ساعة خلال 3 سنوات.'
+      },
+      {
+        id: 12,
+        question: '12. عند إعداد خطة نشاط قرآني حول موضوع «التعلم الذاتي، الاستشارة، إدارة الوقت، أو الجودة والإتقان»، تحت أي مجال رئيسي يندرج هذا النشاط في ملف «كفايات التربية القرآنية المعتمد»؟',
+        options: [
+          'المجال النفسي وإدارة الذات (ويشمل: التعلم الذاتي، الاستشارة، إدارة العواطف والانفعالات، إدارة المال، إدارة الوقت، الجودة والإتقان)',
+          'المجال العبادي (فقه الطهارة والصلاة)',
+          'المجال الإيماني فقط',
+          'غير مدرج ضمن كفايات التربية القرآنية'
+        ],
+        correct: 0,
+        explanation: 'وفق جدول «المجال النفسي وإدارة الذات - نهائي» في ملف كفايات التربية القرآنية المعتمد، يضم هذا المجال 6 معايير فرعية: التعلم الذاتي، الاستشارة، إدارة العواطف والانفعالات، إدارة المال، إدارة الوقت، والجودة والإتقان.'
       }
     ];
 
@@ -1433,18 +1549,132 @@
       femInput.addEventListener('input', updateChartFromInputs);
       maleInput.addEventListener('input', updateChartFromInputs);
 
+      // Official Kafayat Data from Google Sheet (كفايات التربية القرآنية المعتمد)
+      const kafayatMatrixData = [{"domain": "المجال الإيماني", "subDomain": "أركان الإيمان", "topic": "تعريف الإيمان، وتعداد أركانه بالأدلة، وأن الإيمان قولٌ وعملٌ واعتقاد، وأنه يزيد بالطاعة وينقص بالعصيان", "stages": {"المرحلة الابتدائية (1-3)": ["يعدد أركان الإيمان"], "المرحلة الابتدائية (4-6)": ["يستدل على أركان الإيمان بحديث جبريل"], "المرحلة الإعدادية": ["يعرّف الإيمان"], "المرحلة الثانوية": ["يستشعر زيادة الإيمان بالطاعة ونقصانه بالمعصية"]}}, {"domain": "المجال الإيماني", "subDomain": "الإيمان بالله", "topic": "الإيمان بوجود الله والأدلة على ذلك من الفطرة، العقل، الشرع، وبيان  أقسام التوحيد الثلاثة: الربوبية، والألوهية، والأسماء والصفات، وبيان ثمرات الإيمان بالله", "stages": {"المرحلة الابتدائية (1-3)": ["يستدل بالمخلوقات على الخالق"], "المرحلة الابتدائية (4-6)": ["يستدل بالمخلوقات على الخالق"], "المرحلة الإعدادية": ["يعبّر عن جوانب من عظمة الله"], "المرحلة الثانوية": ["يستدل على وجود الله من القرآن والسنة", "يذكر أقسام التوحيد ويمثّل لها", "يستشعر  ثمرات الإيمان بالله"]}}, {"domain": "المجال الإيماني", "subDomain": "الإيمان بالملائكة", "topic": "تعريف الملائكة، والأدلة على وجوب الإيمان بهم، ومقتضيات وثمرات الإيمان بهم", "stages": {"المرحلة الابتدائية (1-3)": ["يذكر بعض أسماء الملائكة"], "المرحلة الابتدائية (4-6)": ["يتعرف على صفات الملائكة ووظائفهم"], "المرحلة الإعدادية": ["يستدل على وجوب الإيمان بالملائكة"], "المرحلة الثانوية": ["يستشعر ثمرات الإيمان بالملائكة"]}}, {"domain": "المجال الإيماني", "subDomain": "الإيمان بالكتب", "topic": "تعريف الكتب السماوية، والأدلة على وجوب الإيمان بها، ومقتضيات وثمرات الإيمان بها", "stages": {"المرحلة الابتدائية (1-3)": ["يذكر أسماء الكتب السماوية وأصحابها إجمالاً"], "المرحلة الابتدائية (4-6)": [], "المرحلة الإعدادية": ["يستدل على وجوب الإيمان بالكتب السماوية"], "المرحلة الثانوية": ["يناقش جوانب من عظمة القرآن وأنه ناسخ لما قبله", "يستشعر ثمرات الإيمان بالكتب السماوية"]}}, {"domain": "المجال الإيماني", "subDomain": "الإيمان بالرسل", "topic": "تعريف الرسول والنبي، والأدلة على وجوب الإيمان بهم، ومقتضيات وثمرات الإيمان بهم", "stages": {"المرحلة الابتدائية (1-3)": ["يذكر أسماء أولي العزم من الرسل بحسب ترتيبهم التاريخي"], "المرحلة الابتدائية (4-6)": ["يعدد أسماء أنبياء ورسل ذكروا في القرآن مما يحفظ"], "المرحلة الإعدادية": ["يستدل على الإيمان بالرسل من الكتاب والسنة", "يؤمن بما صح من أخبارهم، ويعتقد بأن محمد خاتمهم"], "المرحلة الثانوية": ["يعرف الفرق بين النبي والرسول", "يستشعر ثمرات الإيمان بالرسل"]}}, {"domain": "المجال الإيماني", "subDomain": "الإيمان باليوم الآخر", "topic": "تعريف اليوم الآخر، وسبب تسميته بذلك، والأدلة على وجوب الإيمان به، ومقتضيات وثمرات الإيمان به، وبيان أشراط الساعة الصغرى والكبرى", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": [], "المرحلة الإعدادية": ["يعرف معنى اليوم الآخر وسبب تسميته بذلك", "يستدل على وجوب الإيمان باليوم الآخر"], "المرحلة الثانوية": ["يؤمن بالبرزخ، والبعث، والثواب، والحساب، والجنة والنار", "يعدد أهم أشراط الساعة وثمرات الإيمان بها", "يعدد ثمرات الإيمان باليوم الآخر"]}}, {"domain": "المجال الإيماني", "subDomain": "الإيمان بالقدر خيره وشره", "topic": "تعريف القضاء والقدر، والأدلة على وجوب الإيمان به، ومفتضيات وثمرات الإيمان به", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": [], "المرحلة الإعدادية": ["يعرف معنى الإيمان بالقضاء والقدر", "يستدل على وجوب الإيمان بالقضاء والقدر"], "المرحلة الثانوية": ["يؤمن بأن الله يعلم كل شيء، وأن الله كتب المقادير، وأن كل شيء بمشيئة الله، وأهمية الأخذ بالأسباب", "يعدد ثمرات الإيمان بالقدر خيره وشره"]}}, {"domain": "المجال العبادي", "subDomain": "أركان الإسلام", "topic": "تعريف الإسلام من خلال حديث جبريل، وبيان أدلة الإيمان به من الكتاب والسنة، وبيان أركان الإسلام إجمالاً", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": ["يعدد أركان الإسلام"], "المرحلة الإعدادية": ["يستدل لوجوب الإيمان بأركان الإسلام"], "المرحلة الثانوية": ["يشرح حديث جبريل إجمالاً"]}}, {"domain": "المجال العبادي", "subDomain": "فقه الطهارة", "topic": "أحكام الطهارة، وآثارها التربوية والسلوكية", "stages": {"المرحلة الابتدائية (1-3)": ["يعرف أهمية الطهارة في الإسلام", "يتعرف على آداب الخلاء", "يؤدي الوضوء بطريقة صحيحة"], "المرحلة الابتدائية (4-6)": ["يتعرف على أحكام النجاسة وطرق إزالتها", "يتعرف على أحكام المسح على الخفين", "يؤدي الوضوء بطريقة صحيحة"], "المرحلة الإعدادية": ["يتعرف على أحكام المياه", "يؤدي التيمم بطريقة صحيحة", "يتعرف على أحكام الغسل", "يتعرف على أحكام الجبائر ونحوها"], "المرحلة الثانوية": ["يتعرف على أحكام طهارة المريض", "يعدد أركان وواجبات الوضوء والغسل", "يتعرف على سنن الفطرة", "يستشعر الآثار التربوية والسلوكية للطهارة"]}}, {"domain": "المجال العبادي", "subDomain": "فقه الصلاة", "topic": "أحكام الصلاة، وآثارها التربوية والسلوكية", "stages": {"المرحلة الابتدائية (1-3)": ["يتعرف على أهمية الصلاة وحكمها", "يؤدي الصلاة بطريقة صحيحة"], "المرحلة الابتدائية (4-6)": ["يتعرف على أحكام صلاة الجماعة وآدابها", "يؤدي الصلاة بطريقة صحيحة"], "المرحلة الإعدادية": ["يتعرف على أحكام صلاة الجمعة", "يتعرف على أحكام صلاة المريض"], "المرحلة الثانوية": ["يعدد أركان وواجبات ومبطلات الصلاة", "يتعرف على أحكام سجود السهو", "يتعرف على أحكام صلاة المسافر", "يتعرف على أحكام صلاة (الخسوف والكسوف والاستسقاء)", "يتعرف على أحكام صلاة الجنازة", "يستشعر ثمرات المحافظة على الصلاة"]}}, {"domain": "المجال العبادي", "subDomain": "فقه الصيام", "topic": "أحكام الصيام، وآثاره التربوية", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": ["يتعرف على أهمية الصيام والحكمة من مشروعيته", "يتعرف على مفطرات الصوم"], "المرحلة الإعدادية": ["يتعرف على حكم صيام شهر رمضان وعلى من يجب", "يتعرف على آداب الصوم"], "المرحلة الثانوية": ["يتعرف على ثمرات المحافظة على الصيام"]}}, {"domain": "المجال العبادي", "subDomain": "النوافل", "topic": "أحكا م النوافل، وثمراتها الإيمانية", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": [], "المرحلة الإعدادية": ["يتعرف على مفهوم النوافل وفضلها", "يتعرف على نوافل الصلاة"], "المرحلة الثانوية": ["يتعرف على نوافل الصدقة", "يتعرف على نوافل الصيام", "يستشعر آثار النوافل الإيمانية"]}}, {"domain": "المجال العبادي", "subDomain": "الآداب والأذكار", "topic": "أهمية الآداب والأذكار، وأنواعها، وثمراتها", "stages": {"المرحلة الابتدائية (1-3)": ["يتعرف على آداب الطعام", "يتعرف على آداب القرآن"], "المرحلة الابتدائية (4-6)": ["يتعرف على آداب الاستئذان", "يتعرف على آداب القرآن", "يتعرف على أهميتها وفضلها"], "المرحلة الإعدادية": ["يحفظ أذكار (النوم والاستيقاظ والخلاء والوضوء واللباس والصلاة والدخول والخروج من المنزل والمجلس وركوب الدابة)", "يتعرف على آداب الكلام", "يتعرف على آداب المتعلم"], "المرحلة الثانوية": ["يتعرف على آداب المزاح", "يتعرف على آداب الخلاف والحوار", "يستشعر آثار المحافظة على الآداب", "يستشعر آثار المحافظة على الأذكار"]}}, {"domain": "المجال السلوكي", "subDomain": "محاسن الأخلاق ومساوؤها", "topic": "تعرف الأخلاق، وبيان أهميتها، وثمراتها", "stages": {"المرحلة الابتدائية (1-3)": ["يعدد بعض الأخلاق الحسنة", "يعدد بعض الأخلاق السيئة"], "المرحلة الابتدائية (4-6)": ["يتعرف على محاسن الأخلاق ويحذر من مساوئها", "يحرص على الصدق واجتناب الكذب في حديثه"], "المرحلة الإعدادية": ["يتعرف على فضل حسن الخلق في الكتاب والسنة", "يضرب أمثلة على  حسن الخلق من قصص الأنبياء والصالحين"], "المرحلة الثانوية": ["يتمثل حسن الخلق في معاملته مع الآخرين", "يستشعر ثمرات حسن الخلق"]}}, {"domain": "المجال السلوكي", "subDomain": "أمراض القلوب", "topic": "التحذير من أهم آفات القلوب: (الحسد، سوء الظن، الإعجاب بالنفس)", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": [], "المرحلة الإعدادية": ["يتعرف على معنى الحسد، وأنواعه، ومساوؤه", "يتعرف على معنى سوء الظن، والأدلة على حرمته"], "المرحلة الثانوية": ["يتعرف على معنى الإعجاب بالنفس، وأنواعه، والأدلة على حرمته", "يتعرف على نماذج من السيرة والتاريخ حذرت من هذه الآفات", "يستشعر ثمرات الحذر من هذه الآفات"]}}, {"domain": "المجال السلوكي", "subDomain": "آفات اللسان", "topic": "التحذير من أهم آفات اللسان: (الكذب، الغيبة، النميمة، السخرية، بذاءة اللسان).", "stages": {"المرحلة الابتدائية (1-3)": ["يحذر من الكذب، ويعرف عاقبته الوخيمة"], "المرحلة الابتدائية (4-6)": ["يحذر من بذاءة اللسان، ويستشعر عاقبته الوخيمة", "يتعرف على نماذج من السيرة والتاريخ تحث على المحافظة على اللسان"], "المرحلة الإعدادية": ["يحذر من السخرية والاستهزاء، ويعرف أنواعها، ويحذر من عاقبتها الوخيمة", "يتعرف على نماذج من السيرة والتاريخ تحث على المحافظة على اللسان"], "المرحلة الثانوية": ["يتعرف على معنى الغيبة، وأنواعها، والأدلة على حرمتها", "يتعرف على معنى النميمة، وأنواعها، والأدلة على حرمتها", "يستشعر ثمرات المحافظة على اللسان"]}}, {"domain": "المجال السلوكي", "subDomain": "آفات عامة", "topic": "التحذير من بعض الآفات: (الظلم، الخيانة، إخلاف الوعد، السرقة، الغش، الإهمال، الغضب، التعصب، عدم النظافة، الفوضى وعدم التنظيم، اللهو)", "stages": {"المرحلة الابتدائية (1-3)": ["يحذر من السرقة، ويعرف عاقبتها الوخيمة"], "المرحلة الابتدائية (4-6)": ["يعتني بنظافة جسمه وهندامه", "يحذر من الإهمال، ويعرف أنواعه"], "المرحلة الإعدادية": ["يحذر من الغش، ويعرف أنواعه", "يتعرف على أهمية الوفاء بالوعد"], "المرحلة الثانوية": ["يحذر من الظلم، ويعرف أنواعه وعاقبته", "يحذر من الخيانة، ويعرف أنواعها", "يتعرف أسباب الغضب ومخاطره وكيفية التغلب عليه", "يتعرف أسباب التعصب، ومخاطره، ويحذر منه", "يتعرف على اللهو المباح واللهو المحرم", "يستشعر ثمرات الحذر من هذه الآفات"]}}, {"domain": "المجال الأسري والاجتماعي", "subDomain": "بر الوالدين", "topic": "الحث على بر الوالدين، وأنواعه، وثمراته", "stages": {"المرحلة الابتدائية (1-3)": ["يعدد بعض أفضال والديه عليه"], "المرحلة الابتدائية (4-6)": ["يتعرف على صور من بر الوالدين", "يتعرف على نماذج من السيرة والتاريخ لبر الوالدين"], "المرحلة الإعدادية": ["يستدل على وجوب بر الوالدين بالكتاب والسنة", "يتعرف على نماذج من السيرة والتاريخ لبر الوالدين"], "المرحلة الثانوية": ["يحذر من عقوق والديه، ويتعرف على صور ذلك", "يستشعر ثمرات بر الوالدين"]}}, {"domain": "المجال الأسري والاجتماعي", "subDomain": "صلة الأرحام", "topic": "الحث على صلة الأرحام، وأنواعه، وثمراته", "stages": {"المرحلة الابتدائية (1-3)": ["يزور أرحامه"], "المرحلة الابتدائية (4-6)": ["يزور أرحامه بصورة منتظمة ما أمكن", "يتعرف على نماذج من السيرة والتاريخ لصلة الأرحام"], "المرحلة الإعدادية": ["يستدل على وجوب صلة الأرحام بالكتاب والسنة", "يتعرف على صور صلة الأرحام"], "المرحلة الثانوية": ["يحذر من قطيعة أرحامه، ويتعرف على صور ذلك", "يستشعر ثمرات صلة الأرحام"]}}, {"domain": "المجال الأسري والاجتماعي", "subDomain": "الإحسان إلى الآخرين", "topic": "مفهوم الإحسان إلى الآخرين، والحث عليه، وأنواعه، وثمراته", "stages": {"المرحلة الابتدائية (1-3)": ["يعتاد الابتسامة والبشاشة في وجه الآخرين", "يقدم لأحبابه هدية بسيطة في مناسبة مهمة"], "المرحلة الابتدائية (4-6)": ["يعتاد الابتسامة والبشاشة في وجه الآخرين", "يتصدق بجزء من مصروفه على الفقراء والمساكين"], "المرحلة الإعدادية": ["يستدل على الإحسان للناس بالكتاب والسنة", "يتعرف على صور الإحسان للناس", "يتعرف على نماذ من السيرة والتاريخ للإحسان للناس"], "المرحلة الثانوية": ["يحذر من إيذاء الغير باللسان أو الجوارح", "يستشعر ثمرات الإحسان للناس"]}}, {"domain": "المجال الأسري والاجتماعي", "subDomain": "مهارات الحوار والتواصل", "topic": "مفهوم الحوار والتواصل، وآدابه، وثمراته", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": ["يستمع للمتحدث متجنباً مقاطعته"], "المرحلة الإعدادية": ["يتفاعل مع المتحدث", "يتعرف على نماذج من السيرة والتاريخ لفن الحوار والتواصل"], "المرحلة الثانوية": ["يتعرف على آداب الحوار وفن التواصل", "يجتنب الشدة والخصومة مع من يخالفه الرأي", "يستشعر ثمرات حسن الحوار والتواصل"]}}, {"domain": "المجال الأسري والاجتماعي", "subDomain": "العمل الجماعي", "topic": "مفهوم العمل الجماعي، وأهميته، ومقومات نجاحه، وثمراته", "stages": {"المرحلة الابتدائية (1-3)": ["يحب مشاركة أصدقائه"], "المرحلة الابتدائية (4-6)": ["يحب مشاركة أصدقائه"], "المرحلة الإعدادية": ["يعرف معنى العمل الجماعي وأهميته وأدلته", "يتعرف على نماذج من السيرة والتاريخ في العمل الجماعي"], "المرحلة الثانوية": ["يتعرف على مقومات ومعوقات العمل الجماعي", "يشارك بفاعليه في فرق العمل التي يدعى إليها", "يستشعر ثمرات العمل الجماعي"]}}, {"domain": "المجال النفسي وإدارة الذات", "subDomain": "التعلم الذاتي", "topic": "مفهوم التعلم الذاتي، وأهميته، وكيفيته، وأخلاق طالب العلم، وثمراته", "stages": {"المرحلة الابتدائية (1-3)": ["يطرح الأسئلة على من حوله"], "المرحلة الابتدائية (4-6)": ["يناقش إجابات الآخرين على أسئلته"], "المرحلة الإعدادية": ["يتعرف على كيفية التعلم الذاتي ووسائله", "يبحث عن إجابات لأسئلته في مصادر المعرفة المتوفرة لديه"], "المرحلة الثانوية": ["يتعرف على الأسباب المعينة على طلب العلم، وآفات طالبه", "يدرك أهمية العمل بالعلم", "يدرك تكامل العلوم الشرعية مع غيرها من العلوم", "يستشعر ثمرات التعلم الذاتي"]}}, {"domain": "المجال النفسي وإدارة الذات", "subDomain": "الاستشارة", "topic": "مفهوم الاستشارة، وأهميتها، وأدلتها، وارتباطها بالاستخارة، وصفات المستشار، وثمرات الاستشارة", "stages": {"المرحلة الابتدائية (1-3)": ["يستشير والديه ومعلميه"], "المرحلة الابتدائية (4-6)": ["يستشير والديه ومعلميه"], "المرحلة الإعدادية": ["يتعرف على مفهوم الاستشارة وأهميتها", "يعتاد صلاة الاستخارة ودعاءها", "يتعرف على نماذج من السيرة والتاريخ للاستشارة"], "المرحلة الثانوية": ["يستدل لأهمية الاستشارة من الكتاب والسنة", "يتعرف على صفات المستشار الجيد", "ينوع مصادر الاستشارة، ويقارن بينها", "يستشعر ثمرات الاستشارة"]}}, {"domain": "المجال النفسي وإدارة الذات", "subDomain": "إدارة العواطف والانفعالات", "topic": "الحب والبغض في الله، وصفات الصاحب الصالح، وأهمية التوازن في العواطف والانفعالات، وثمرات ذلك", "stages": {"المرحلة الابتدائية (1-3)": ["يحب الخير وأهله"], "المرحلة الابتدائية (4-6)": ["يحب الخير وأهله"], "المرحلة الإعدادية": ["يتعرف على صفات الصاحب الصالح", "يتعرف على نماذج من السيرة والتاريخ لإدارة العواطف والانفعالات"], "المرحلة الثانوية": ["يتعرف على مفهوم الحب والبغض في الله", "يحسن إدارة عواطفه وانفعالاته", "يستشعر ثمرات إحسان إدارة العواطف والانفعالات"]}}, {"domain": "المجال النفسي وإدارة الذات", "subDomain": "إدارة المال", "topic": "أهمية الكسب الحلال، ومفهوم الإنفاق الصحيح، وثمرات ذلك", "stages": {"المرحلة الابتدائية (1-3)": ["يدخر جزءاً يسيراً من مصروفه اليومي"], "المرحلة الابتدائية (4-6)": ["يدخر جزءاً يسيراً من مصروفه اليومي"], "المرحلة الإعدادية": ["يتعرف على نماذج من السيرة والتاريخ لأهمية الكسب الحلال وحسن استخدام المال"], "المرحلة الثانوية": ["يستدل لوجوب الكسب الحلال من الكتاب والسنة", "يحسن تدبير مصروفاته", "يستشعر ثمرات الكسب الحلال وحسن تدبير المال"]}}, {"domain": "المجال النفسي وإدارة الذات", "subDomain": "إدارة الوقت", "topic": "أهمية الوقت، ومهارات إدارته، وثمرات ذلك", "stages": {"المرحلة الابتدائية (1-3)": ["يلتزم بالحضور إلى المركز قبل الوقت المحدد"], "المرحلة الابتدائية (4-6)": ["يلتزم بالحضور إلى المركز قبل الوقت المحدد"], "المرحلة الإعدادية": ["يتجنب إضاعة الوقت في الحلقة", "يتعرف على نماذج من السيرة والتاريخ لكيفية الاستفادة من الوقت والمحافظة عليه"], "المرحلة الثانوية": ["يستدل لأهمية الوقت من الكتاب والسنة", "ينظم وقت ويرتب أولوياته بشكل سليم", "يستشعر ثمرات إدارة الوقت"]}}, {"domain": "المجال النفسي وإدارة الذات", "subDomain": "الجودة والإتقان", "topic": "مفهوم الجودة والإتقان، وأهميتهما، زمقوماتهما، وثمراتهما", "stages": {"المرحلة الابتدائية (1-3)": [], "المرحلة الابتدائية (4-6)": ["يهتم بهندامه ويتفقده قبل الخروج من المنزل"], "المرحلة الإعدادية": ["يقرأ درسه الجديد دون أخطاء في أحكام التجويد مراعيا الوقف والابتداء", "يتعرف على نماذج من السيرة والتاريخ لجودة وإتقان العمل"], "المرحلة الثانوية": ["يستدل للجودة والإتقان من الكتاب والسنة", "يتحرى الدقة في أقواله وأفعاله", "يستشعر ثمرات الجودة والإتقان"]}}];
+      let activeKafayatDomainFilter = 'all';
+
+      function populateSubDomainsDropdown(selectedDomain, selectedSub) {
+        const subSelect = document.getElementById('planSubDomain');
+        const filtered = selectedDomain
+          ? kafayatMatrixData.filter((item) => item.domain === selectedDomain)
+          : kafayatMatrixData;
+        subSelect.innerHTML = '<option value="">-- اختاري المعيار الفرعي --</option>' +
+          filtered.map((item) => `<option value="${item.subDomain}">${item.subDomain} (${item.domain})</option>`).join('');
+        if (selectedSub) {
+          subSelect.value = selectedSub;
+        }
+      }
+
+      function autoFillCompetencyFromSelection() {
+        const subVal = document.getElementById('planSubDomain').value;
+        const stageVal = document.getElementById('planStage').value;
+        if (!subVal) return;
+        const found = kafayatMatrixData.find((item) => item.subDomain === subVal);
+        if (!found) return;
+        document.getElementById('planDomain').value = found.domain;
+        const stageList = found.stages[stageVal] || [];
+        const compText = stageList.length > 0
+          ? stageList.join(' + ')
+          : 'تحقيق كفايات ' + found.subDomain + ' المقررة للمرحلة';
+        document.getElementById('planCompetency').value = `[${found.subDomain} - ${stageVal}]: ${compText}`;
+        document.getElementById('planGoal').value = found.topic || ('غرس وتطبيق كفايات ' + found.subDomain);
+      }
+
+      function renderKafayatTable() {
+        const searchQ = (document.getElementById('kafayatSearchInput').value || '').trim();
+        const tbody = document.getElementById('kafayatTableBody');
+        const rows = kafayatMatrixData.filter((item) => {
+          const matchDomain = activeKafayatDomainFilter === 'all' || item.domain === activeKafayatDomainFilter;
+          if (!matchDomain) return false;
+          if (!searchQ) return true;
+          const haystack = [
+            item.domain,
+            item.subDomain,
+            item.topic,
+            ...(item.stages['المرحلة الابتدائية (1-3)'] || []),
+            ...(item.stages['المرحلة الابتدائية (4-6)'] || []),
+            ...(item.stages['المرحلة الإعدادية'] || []),
+            ...(item.stages['المرحلة الثانوية'] || [])
+          ].join(' ');
+          return haystack.includes(searchQ);
+        });
+
+        tbody.innerHTML = rows.map((item, idx) => {
+          const s1 = (item.stages['المرحلة الابتدائية (1-3)'] || []).join(' • ') || '—';
+          const s2 = (item.stages['المرحلة الابتدائية (4-6)'] || []).join(' • ') || '—';
+          const s3 = (item.stages['المرحلة الإعدادية'] || []).join(' • ') || '—';
+          const s4 = (item.stages['المرحلة الثانوية'] || []).join(' • ') || '—';
+          return `
+            <tr class="hover:bg-teal-50/40 transition">
+              <td class="p-2.5 font-bold text-teal-900 whitespace-nowrap">${item.domain}</td>
+              <td class="p-2.5 font-extrabold text-slate-900">${item.subDomain}</td>
+              <td class="p-2.5 text-slate-600 max-w-xs">${item.topic}</td>
+              <td class="p-2.5 text-slate-700">${s1}</td>
+              <td class="p-2.5 text-slate-700">${s2}</td>
+              <td class="p-2.5 text-slate-700">${s3}</td>
+              <td class="p-2.5 text-slate-700">${s4}</td>
+              <td class="p-2.5 text-center">
+                <button type="button" data-sub="${item.subDomain}" class="use-kafaya-btn bg-teal-700 hover:bg-teal-800 text-white font-bold text-[11px] px-2.5 py-1.5 rounded-lg whitespace-nowrap transition">
+                  تطبيق في الخطة ⬆️
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        tbody.querySelectorAll('.use-kafaya-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const subName = btn.getAttribute('data-sub');
+            const found = kafayatMatrixData.find((x) => x.subDomain === subName);
+            if (!found) return;
+            document.getElementById('planDomain').value = found.domain;
+            populateSubDomainsDropdown(found.domain, found.subDomain);
+            if (!document.getElementById('planActivityName').value.trim()) {
+              document.getElementById('planActivityName').value = 'نشاط قرآني تطبيقي في معيار: ' + found.subDomain;
+            }
+            if (!document.getElementById('planActivityType').value) {
+              document.getElementById('planActivityType').value = 'تربوي قيمي';
+            }
+            autoFillCompetencyFromSelection();
+            showToast(`تم إدراج معيار «${found.subDomain}» وكفاياته المعتمدة في نموذج الخطة أعلاه!`);
+          });
+        });
+      }
+
+      populateSubDomainsDropdown('', '');
+      renderKafayatTable();
+
+      document.getElementById('planDomain').addEventListener('change', (e) => {
+        populateSubDomainsDropdown(e.target.value, '');
+      });
+      document.getElementById('planSubDomain').addEventListener('change', autoFillCompetencyFromSelection);
+      document.getElementById('planStage').addEventListener('change', autoFillCompetencyFromSelection);
+      document.getElementById('kafayatSearchInput').addEventListener('input', renderKafayatTable);
+
+      document.querySelectorAll('.kdomain-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          activeKafayatDomainFilter = btn.getAttribute('data-kdomain');
+          document.querySelectorAll('.kdomain-btn').forEach((b) => {
+            b.className = 'kdomain-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl transition';
+          });
+          btn.className = 'kdomain-btn bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition';
+          renderKafayatTable();
+        });
+      });
+
       // Tab 3: Pedagogical Plan
       document.getElementById('fillSamplePlanBtn').addEventListener('click', () => {
-        document.getElementById('planActivityName').value = 'برنامج «بالقرآن نرتقي» لتدبر آيات الأخلاق وبر الوالدين';
+        document.getElementById('planActivityName').value = 'برنامج «بالقرآن نرتقي» لتطبيق معيار بر الوالدين';
         document.getElementById('planActivityType').value = 'تربوي قيمي';
-        document.getElementById('planDomain').value = 'المجال الأخلاقي والسلوكي';
-        document.getElementById('planCompetency').value = 'كفاية التخلق بآداب القرآن الكريم وتوقير الوالدين';
-        document.getElementById('planGoal').value = 'غرس قيمة بر الوالدين والإحسان إليهما لدى 30 طالبة بالمركز من خلال تدبر سورة الإسراء وتطبيقاتها العملية';
+        document.getElementById('planDomain').value = 'المجال الأسري والاجتماعي';
+        populateSubDomainsDropdown('المجال الأسري والاجتماعي', 'بر الوالدين');
+        document.getElementById('planStage').value = 'المرحلة الإعدادية';
+        autoFillCompetencyFromSelection();
         document.getElementById('chkParentConsent').checked = true;
         document.getElementById('chkSafetyCheck').checked = true;
         document.getElementById('chkTaskDist').checked = true;
         document.getElementById('chkIqraaReg').checked = true;
-        document.getElementById('planMediaReport').value = 'نظم مركز تحفيظ القرآن الكريم برنامج «بالقرآن نرتقي» بمشاركة 30 طالبة وتحت إشراف مشرفتين ملتزمتين بمعايير الأمن والسلامة، وهدف النشاط إلى ربط الطالبات بكفايات برنامج التربية القرآنية في بر الوالدين، ومرفق لكم 4 صور مختارة للنشر في حسابات الوزارة.';
+        document.getElementById('planMediaReport').value = 'نظم مركز تحفيظ القرآن الكريم برنامج «بالقرآن نرتقي» بمشاركة 30 طالبة من المرحلة الإعدادية تحت إشراف مشرفتين ملتزمتين بمعايير الأمن والسلامة، وهدف النشاط إلى ربط الطالبات بكفايات برنامج التربية القرآنية المعتمد في (المجال الأسري والاجتماعي - معيار بر الوالدين: يستدل على وجوب بر الوالدين بالكتاب والسنة ويتعرف على نماذج من السيرة والتاريخ)، ومرفق لكم 4 صور مختارة للنشر في حسابات الوزارة.';
         evaluatePedagogicalPlan();
       });
 
@@ -1517,4 +1747,3 @@
   </script>
 </body>
 </html>
-
